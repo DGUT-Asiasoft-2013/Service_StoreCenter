@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/data/jpa
+http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+
+	<!-- 1.配置数据源 3种方式： -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- 数据连接信息 -->
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/five_yuan_store"></property>
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="user" value="FiveYuanStore"></property>
+		<property name="password" value=""></property>
+
+		<property name="minPoolSize" value="5" />
+		<property name="maxPoolSize" value="30" />
+		<property name="maxIdleTime" value="25000" />
+		<property name="acquireIncrement" value="1" />
+		<property name="maxStatements" value="0" />
+		<property name="initialPoolSize" value="1" />
+	</bean>
+
+	<!-- 2.Jpa Entity Manager 配置 -->
+	<bean id="hibernateJpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter" ref="hibernateJpaVendorAdapter" />
+		<property name="packagesToScan" value="org.everyday2point5.fivestore.entity" />
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+
+				<prop key="hibernate.max_fetch_depth">0</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 3.Jpa事务管理 transactionManager 注入:entityManagerFactory -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- 使用注解定义事务 proxy-target-class="true" 可以使用实现类 -->
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+	<!-- Jpa 注解扫描以及 Jpa transactionManager 及 Jpa entityManagerFactory的依赖 base-package目录下带 
+		@Repository的实体 -->
+	<jpa:repositories base-package="org.everyday2point5.fivestore"
+		transaction-manager-ref="transactionManager"
+		entity-manager-factory-ref="entityManagerFactory" />
+
+	<!-- Spring Data Jpa 自定义实现类 Impl <jpa:repositories base-package="com.ssh.demo" 
+		repository-impl-postfix="Impl" transaction-manager-ref="transactionManager" 
+		entity-manager-factory-ref="entityManagerFactory"/> -->
+
+</beans>
