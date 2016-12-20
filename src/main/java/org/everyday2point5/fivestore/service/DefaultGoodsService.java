@@ -24,10 +24,17 @@ public class DefaultGoodsService implements IGoodsService {
 	}
 
 	@Override
-	public Page<Goods> findAllGoods(int i) {
+	public Page<Goods> findAllGoods(int id, int i) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		PageRequest request = new PageRequest(i, 10, sort);
-		return goodsRepo.findAllGoods(request);
+		return goodsRepo.findAllGoods(id, request);
+	}
+
+	@Override
+	public Page<Goods> searchText(String text, int page) {
+		Sort sort = new Sort(Direction.DESC, "createDate");
+		PageRequest request = new PageRequest(page, 10, sort);
+		return goodsRepo.search(text, request);
 	}
 
 }

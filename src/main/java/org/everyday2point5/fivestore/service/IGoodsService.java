@@ -7,6 +7,8 @@ public interface IGoodsService {
 
 	Goods save(Goods goods);
 
-	Page<Goods> findAllGoods(int i);
+	Page<Goods> findAllGoods(int id, int i);
+
+	Page<Goods> searchText(String text, int page);
 
 }
