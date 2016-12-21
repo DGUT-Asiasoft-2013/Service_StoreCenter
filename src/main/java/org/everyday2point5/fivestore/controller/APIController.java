@@ -64,8 +64,8 @@ public class APIController {
 			if(avatar != null){
 				String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
 				try {
-					FileUtils.copyInputStreamToFile(avatar.getInputStream(), new File(realpath,avatar+".png"));
-					user.setAvatar("upload/"+avatar+".png");
+					FileUtils.copyInputStreamToFile(avatar.getInputStream(), new File(realpath,account+".png"));
+					user.setAvatar("upload/"+account+".png");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -154,7 +154,7 @@ public class APIController {
 
 
 	@RequestMapping(value = "/me", method=RequestMethod.GET)
-	public @ResponseBody User getCurrentUser(HttpServletRequest request){
+	public  User getCurrentUser(HttpServletRequest request){
 		 HttpSession session = request.getSession();
 		 Integer uid = (Integer) session.getAttribute("uid");
 			return userService.findById(uid);
@@ -163,8 +163,7 @@ public class APIController {
 	
 	@RequestMapping(value="/search", method=RequestMethod.POST)
 	public Page<Goods> searchArticle(
-			@RequestParam  String text
-			){
+			@RequestParam  String text){
 		
 		return searchArticle(text,0);
 		

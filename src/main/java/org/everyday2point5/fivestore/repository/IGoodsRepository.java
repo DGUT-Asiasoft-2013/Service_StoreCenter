@@ -15,7 +15,7 @@ public interface IGoodsRepository  extends PagingAndSortingRepository<Goods, Int
 	@Query("from Goods g where g.id = ?1")
 	Page<Goods> findAllGoods(int id,Pageable request);
 
-	@Query("from Goods g where g.title like %?1%")
+	@Query("from Goods g where g.title like '%?1%'")
 	Page<Goods> search(String text, Pageable request);
 
 }

@@ -33,6 +33,6 @@
 	    <property name="maxUploadSize" value="200000"></property>
 	</bean>
 	
-		<mvc:resources mapping="/upload/**" location="/WEB_INF/upload" />
+		<mvc:resources mapping="/upload/**" location="/WEB-INF/upload/" />
 
 </beans>
