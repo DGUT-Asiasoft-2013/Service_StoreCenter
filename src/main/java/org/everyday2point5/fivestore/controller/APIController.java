@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.everyday2point5.fivestore.entity.Comment;
 import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.User;
+import org.everyday2point5.fivestore.service.ICommentService;
 import org.everyday2point5.fivestore.service.IGoodsService;
 import org.everyday2point5.fivestore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class APIController {
 	@Autowired
 	IGoodsService goodsService;
 
+	@Autowired
+	ICommentService comentsService;
 
 	@RequestMapping("/")
 	public String index(){
@@ -167,6 +171,55 @@ public class APIController {
 			){
 		return goodsService.searchText(text,page);
 
+	}
+	
+	@RequestMapping(value="goods/{goods_id}/changeGoods", method=RequestMethod.POST)
+	public Goods change(
+			@RequestParam String title,
+			@RequestParam String text,
+			@RequestParam float price,
+			@RequestParam Integer goods_count,
+			@PathVariable Integer goods_id
+			){
+		
+		Goods goods = goodsService.findOne(goods_id);
+		goods.setTitle(title);
+		goods.setText(text);
+		goods.setPrice(price);
+		goods.setGoods_count(goods_count);
+		
+		return goodsService.save(goods);
+	}
+	
+	
+	
+	@RequestMapping(value="goods/{goods_id}/comments/", method=RequestMethod.GET)
+	public Page<Comment> getFirstComments(
+			@PathVariable int goods_id
+			){
+				return comentsService.getComments(goods_id, 0);
+		
+	}
+	
+	@RequestMapping(value="goods/{goods_id}/comments/{page}", method=RequestMethod.GET)
+	public Page<Comment> getComments(
+			@PathVariable int goods_id,
+			@PathVariable int page){
+				return comentsService.getComments(goods_id, page);
+		
+	}
+	
+	
+	@RequestMapping(value = "/goods/{goods_id}/deleteGoods", method = RequestMethod.DELETE)
+	public boolean deleteGoods(
+			@PathVariable Integer goods_id){
+		Goods goods = goodsService.findOne(goods_id);
+		if(goods!=null){
+			goodsService.delete(goods);
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 }

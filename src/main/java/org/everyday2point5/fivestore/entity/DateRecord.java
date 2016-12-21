@@ -9,7 +9,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
-@MappedSuperclass
+import org.springframework.stereotype.Component;
+@Entity
+@Component
 public class DateRecord extends BaseEntity {
 
 	

@@ -12,6 +12,7 @@ import org.everyday2point5.fivestore.util.BaseEntity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
+
 public class Goods  extends DateRecord implements Serializable{
 	/* 商品名称，
 	 * 商品编号
@@ -39,6 +40,7 @@ public class Goods  extends DateRecord implements Serializable{
 	public int getGoods_count() {
 		return goods_count;
 	}
+	
 	public void setGoods_count(int goods_count) {
 		this.goods_count = goods_count;
 	}
@@ -53,7 +55,7 @@ public class Goods  extends DateRecord implements Serializable{
 	
 
 	
-	@Transient
+	@Column
 	public String getGoods_img() {
 		return goods_img;
 	}

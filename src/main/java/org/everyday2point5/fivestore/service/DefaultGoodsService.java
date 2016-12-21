@@ -37,4 +37,13 @@ public class DefaultGoodsService implements IGoodsService {
 		return goodsRepo.search(text, request);
 	}
 
+	public void delete(Goods goods) {
+		// TODO Auto-generated method stub
+		goodsRepo.delete(goods);
+	}
+
+	@Override
+	public Goods findOne(Integer goods_id) {
+		return goodsRepo.findOne(goods_id);
+	}
 }

@@ -9,9 +9,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
 import org.hibernate.annotations.Table;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+@Component
 @Entity
 public class User extends BaseEntity implements Serializable{
 	String account;

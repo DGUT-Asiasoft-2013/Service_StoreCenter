@@ -11,4 +11,7 @@ public interface IGoodsService {
 
 	Page<Goods> searchText(String text, int page);
 
+	void delete(Goods goods);
+
+	Goods findOne(Integer goods_id);
 }
