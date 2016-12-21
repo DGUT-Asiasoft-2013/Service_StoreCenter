@@ -5,28 +5,44 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Goods  extends DateRecord implements Serializable{
 	/* 商品名称，
 	 * 商品编号
 	 * 图片*/
 	String title;
+	User user;
+	int 
+	goods_count; 
+	String goods_img, text;
+	
 
-	int user_id, goods_count; 
+	float price;
+	
+	@JsonIgnore
+	@ManyToOne(optional = false)
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	
 	public int getGoods_count() {
 		return goods_count;
 	}
 	public void setGoods_count(int goods_count) {
 		this.goods_count = goods_count;
 	}
-	String goods_img, text;
-	
-	Date createDate;
-	Date editDate;
-	float price;
+
 	@Column(nullable = false)
 	public String getTitle() {
 		return title;
@@ -34,14 +50,8 @@ public class Goods  extends DateRecord implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	@Column(unique=true)
-	@Transient
-	public int getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
+	
+
 	
 	@Transient
 	public String getGoods_img() {
