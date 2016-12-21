@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
 @RestController
 @RequestMapping("/api")
 public class APIController {
@@ -123,6 +124,15 @@ public class APIController {
 		}
 		return goodsService.save(goods);
 		
+	}
+	
+	@RequestMapping("/feeds/{page}")
+	public Page<Goods> getFeeds(@PathVariable int page){
+		return goodsService.getFeeds(page);
+	}
+	@RequestMapping("/feeds")
+	public Page<Goods> getFeeds(){
+		return getFeeds(0);
 	}
 	
 	@RequestMapping(value="/goods",method=RequestMethod.GET)

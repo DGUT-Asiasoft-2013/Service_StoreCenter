@@ -11,4 +11,6 @@ public interface IGoodsService {
 
 	Page<Goods> searchText(String text, int page);
 
+	Page<Goods> getFeeds(int page);
+
 }

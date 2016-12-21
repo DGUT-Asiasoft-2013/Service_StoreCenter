@@ -37,4 +37,11 @@ public class DefaultGoodsService implements IGoodsService {
 		return goodsRepo.search(text, request);
 	}
 
+	@Override
+	public Page<Goods> getFeeds(int page) {
+		Sort sort=new Sort(Direction.DESC,"createDate");
+		PageRequest pageRequest=new PageRequest(page, 10,sort);
+		return goodsRepo.findAll(pageRequest);
+	}
+
 }
