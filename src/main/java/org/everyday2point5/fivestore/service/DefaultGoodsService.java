@@ -46,4 +46,11 @@ public class DefaultGoodsService implements IGoodsService {
 	public Goods findOne(Integer goods_id) {
 		return goodsRepo.findOne(goods_id);
 	}
+	@Override
+	public Page<Goods> getFeeds(int page) {
+		Sort sort=new Sort(Direction.DESC,"createDate");
+		PageRequest pageRequest=new PageRequest(page, 10,sort);
+		return goodsRepo.findAll(pageRequest);
+	}
+
 }

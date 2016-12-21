@@ -14,4 +14,6 @@ public interface IGoodsService {
 	void delete(Goods goods);
 
 	Goods findOne(Integer goods_id);
+	Page<Goods> getFeeds(int page);
+
 }

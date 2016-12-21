@@ -23,17 +23,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+
 @RestController
 @RequestMapping("/api")
 public class APIController {
 	@Autowired
 	IUserService userService;
 
-	@Autowired
-	IGoodsService goodsService;
-
-	@Autowired
-	ICommentService comentsService;
+	
 
 	@RequestMapping("/")
 	public String index(){
@@ -45,38 +42,8 @@ public class APIController {
 		return "HELLO WORLD";
 	}
 
-	@RequestMapping(value = "/register", method=RequestMethod.POST)
-	public @ResponseBody User register(
-			@RequestParam String name,
-			@RequestParam String account,
-			@RequestParam String email,
-			@RequestParam String passwordHash,
-			MultipartFile avatar,
-			HttpServletRequest request
-			){
-
-		User user = new User();
-		user.setUser_name(name);
-		user.setAccount(account);
-		user.setEmail(email);
-		user.setPassword(passwordHash);
-
-
-
-		if(avatar != null){
-			String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
-			try {
-				FileUtils.copyInputStreamToFile(avatar.getInputStream(), new File(realpath,avatar+".png"));
-				user.setAvatar("upload/"+avatar+".png");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
-		return userService.save(user);
-
-	}
-
+	
+		
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
 	public @ResponseBody User login(
 			@RequestParam String account,
@@ -98,128 +65,5 @@ public class APIController {
 
 
 
-	@RequestMapping(value="/addGoods", method=RequestMethod.POST)
-	public Goods addGoods(
-			@RequestParam  String title,
-			@RequestParam String text,
-			@RequestParam Integer goods_count,
-			@RequestParam float price,
-			MultipartFile goods_img,
-			HttpServletRequest request
-			){
-		Goods goods = new Goods();
-		goods.setTitle(title);
-		goods.setText(text);
-		goods.setPrice(price);
-		goods.setGoods_count(goods_count);
-		User user = getCurrentUser(request);
-		if(user != null){
-			goods.setUser(user);
-		}
-		if(goods_img != null){
-			String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
-			try {
-				FileUtils.copyInputStreamToFile(goods_img.getInputStream(), new File(realpath,goods_img+".png"));
-				goods.setGoods_img("upload/"+goods_img+".png");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return goodsService.save(goods);
-
-	}
-
-	@RequestMapping(value="/goods",method=RequestMethod.GET)
-	public Page<Goods> getGoods( HttpServletRequest request){
-		return getGoods(0, request);
-
-	}
-
-	@RequestMapping(value="/goods/{page}",method=RequestMethod.GET)
-	public Page<Goods> getGoods(
-			@PathVariable int page,
-			HttpServletRequest request
-			){
-		User user = getCurrentUser(request);
-
-		return goodsService.findAllGoods(user.getId(),page);
-
-	}
-
-
-	@RequestMapping(value = "/me", method=RequestMethod.GET)
-	public @ResponseBody User getCurrentUser(HttpServletRequest request){
-		HttpSession session = request.getSession();
-		Integer uid = (Integer) session.getAttribute("uid");
-		return userService.findById(uid);
-	}
-
-
-	@RequestMapping(value="/search", method=RequestMethod.POST)
-	public Page<Goods> searchArticle(
-			@RequestParam  String text
-			){
-
-		return searchArticle(text,0);
-
-	}
-
-	@RequestMapping(value="/search/{page}", method=RequestMethod.POST)
-	public Page<Goods> searchArticle(
-			@RequestParam  String text,
-			@PathVariable  int page
-			){
-		return goodsService.searchText(text,page);
-
-	}
-	
-	@RequestMapping(value="goods/{goods_id}/changeGoods", method=RequestMethod.POST)
-	public Goods change(
-			@RequestParam String title,
-			@RequestParam String text,
-			@RequestParam float price,
-			@RequestParam Integer goods_count,
-			@PathVariable Integer goods_id
-			){
-		
-		Goods goods = goodsService.findOne(goods_id);
-		goods.setTitle(title);
-		goods.setText(text);
-		goods.setPrice(price);
-		goods.setGoods_count(goods_count);
-		
-		return goodsService.save(goods);
-	}
-	
-	
-	
-	@RequestMapping(value="goods/{goods_id}/comments/", method=RequestMethod.GET)
-	public Page<Comment> getFirstComments(
-			@PathVariable int goods_id
-			){
-				return comentsService.getComments(goods_id, 0);
-		
-	}
-	
-	@RequestMapping(value="goods/{goods_id}/comments/{page}", method=RequestMethod.GET)
-	public Page<Comment> getComments(
-			@PathVariable int goods_id,
-			@PathVariable int page){
-				return comentsService.getComments(goods_id, page);
-		
-	}
-	
-	
-	@RequestMapping(value = "/goods/{goods_id}/deleteGoods", method = RequestMethod.DELETE)
-	public boolean deleteGoods(
-			@PathVariable Integer goods_id){
-		Goods goods = goodsService.findOne(goods_id);
-		if(goods!=null){
-			goodsService.delete(goods);
-			return true;
-		}else{
-			return false;
-		}
-	}
 
 }
