@@ -1,3 +1,4 @@
+
 package org.everyday2point5.fivestore.entity;
 
 import java.io.Serializable;
