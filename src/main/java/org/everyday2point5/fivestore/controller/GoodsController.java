@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.everyday2point5.fivestore.entity.Comment;
 import org.everyday2point5.fivestore.entity.Goods;
-import org.everyday2point5.fivestore.entity.Order;
+import org.everyday2point5.fivestore.entity.MyOrder;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.service.ICommentService;
 import org.everyday2point5.fivestore.service.IGoodsService;
@@ -176,27 +176,30 @@ public class GoodsController {
 		}else{
 			return false;
 		}
+		
 	}
 	
 	@RequestMapping(value="/buy/{goods_id}", method=RequestMethod.POST)
-	public Order buy(
+	public MyOrder buy(
 			@PathVariable Integer goods_id,
 			@RequestParam String name,
 			@RequestParam String phone,
 			@RequestParam String address,
+			@RequestParam int amount,
 			HttpServletRequest  request
 			){
-		Order order = new Order();
+		MyOrder order = new MyOrder();
 		order.setName(name);
 		order.setAddress(address);
 		order.setPhone(phone);
 		User user = getCurrentUser(request);
 		Integer user_id = user.getId();
 		order.setGoods_id(goods_id);
-		int randomNum = new Random().nextInt(100);
+		int randomNum = new Random().nextInt(1000000);
 		Integer order_num = user_id+20161222+randomNum;
 		order.setOrder_num(order_num);
-		order.setStatus(0);
+		order.setStatus(1);//确认付款
+		order.setAmount(amount);
 		return orderService.save(order);
 		
 	}

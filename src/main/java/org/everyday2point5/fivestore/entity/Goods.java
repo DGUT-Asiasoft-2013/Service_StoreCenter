@@ -30,7 +30,7 @@ public class Goods  extends BaseEntity implements Serializable {
 
 	float price;
 	
-Date createDate, editDate;
+	Date createDate, editDate;
 	
 	@Column(updatable = false)
 	public Date getCreateDate() {
