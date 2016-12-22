@@ -30,16 +30,16 @@ public class InboxController {
 	@RequestMapping(value="/addInbox", method=RequestMethod.POST)
 	public Inbox addInbox(
 			@RequestParam String content,
-			@RequestParam int send_id,	
+			@RequestParam String send_name,	
 			@RequestParam Date createDate,
 			HttpServletRequest request
 			){
 		Inbox inbox=new Inbox();
 		inbox.setContent(content);
-		inbox.setSend_id(send_id);
+		inbox.setSend_name(send_name);
 		inbox.setIsread(false);
 		inbox.setCreateDate(createDate);
-		
+		System.out.print(content+send_name+createDate);
 		
 		HttpSession session = request.getSession();
 		Integer uid = (Integer) session.getAttribute("uid");
@@ -47,7 +47,7 @@ public class InboxController {
 		
 		User user =userService.findById(uid);
 		if(user!=null){
-			inbox.setRec_id(user.getId());
+			inbox.setRec_name(user.getUser_name());
 		}
 			
 		
