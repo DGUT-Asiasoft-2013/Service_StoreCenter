@@ -23,11 +23,15 @@ public class Goods  extends BaseEntity implements Serializable {
 	 */
 	String title;
 	int goods_count;
+	String goods_id;
 	User user;
 	String goods_img;
 	String text;
 	String salerName;
-
+	float price;
+	
+	Date createDate, editDate;
+	
 	public String getSalerName() {
 		return salerName;
 	}
@@ -36,13 +40,19 @@ public class Goods  extends BaseEntity implements Serializable {
 		this.salerName = salerName;
 	}
 
-	float price;
-	
-	Date createDate, editDate;
-	
+
 	@Column(updatable = false)
 	public Date getCreateDate() {
 		return createDate;
+	}
+
+	
+	public String getGoods_id() {
+		return goods_id;
+	}
+
+	public void setGoods_id(String goods_id) {
+		this.goods_id = goods_id;
 	}
 
 	public void setCreateDate(Date createDate) {
