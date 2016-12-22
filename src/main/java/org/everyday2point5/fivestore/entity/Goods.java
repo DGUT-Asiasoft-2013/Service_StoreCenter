@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Transient;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
@@ -14,29 +16,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-public class Goods extends DateRecord implements Serializable {
+public class Goods  extends BaseEntity implements Serializable {
 	/*
 	 * 商品名称， 商品编号 图片
 	 */
 	String title;
-	int user_id;
 	int goods_count;
 	User user;
 	String goods_img;
 	String text;
 
-	Date createDate;
-	Date editDate;
+
 	float price;
 	
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
+Date createDate, editDate;
+	
+	@Column(updatable = false)
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -44,7 +39,7 @@ public class Goods extends DateRecord implements Serializable {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
+	@Column
 	public Date getEditDate() {
 		return editDate;
 	}
@@ -53,6 +48,28 @@ public class Goods extends DateRecord implements Serializable {
 		this.editDate = editDate;
 	}
 
+	@PreUpdate
+	void onPreUpdate(){
+		editDate = new Date();
+	}
+	
+	@PrePersist
+	void onPrePresist(){
+		createDate = new Date();
+		editDate = new Date();
+	}
+	
+	@JsonIgnore
+	@ManyToOne(optional = false)
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	
 	public int getGoods_count() {
 		return goods_count;
 	}
@@ -73,16 +90,7 @@ public class Goods extends DateRecord implements Serializable {
 	}
 
 
-	@Column(unique = true)
-	@Transient
-	public int getUser_id() {
-		return user_id;
-	}
-
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
-	}
-
+	@Column
 	public String getGoods_img() {
 		return goods_img;
 	}
@@ -90,7 +98,7 @@ public class Goods extends DateRecord implements Serializable {
 	public void setGoods_img(String goods_img) {
 		this.goods_img = goods_img;
 	}
-
+	@Column
 	public String getText() {
 		return text;
 	}

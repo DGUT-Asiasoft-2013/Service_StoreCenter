@@ -11,7 +11,6 @@ import javax.persistence.PreUpdate;
 import org.everyday2point5.fivestore.util.BaseEntity;
 import org.springframework.stereotype.Component;
 @Entity
-@Component
 public class DateRecord extends BaseEntity {
 
 	

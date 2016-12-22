@@ -58,12 +58,39 @@ public class APIController {
 		}else{
 			return null;
 		}
-
-
-
 	}
 
-
+	@RequestMapping(value = "/register", method=RequestMethod.POST)
+	public @ResponseBody User register(
+			@RequestParam String name,
+			@RequestParam String account,
+			@RequestParam String email,
+			@RequestParam String passwordHash,
+			MultipartFile avatar,
+			HttpServletRequest request
+			){
+		
+		User user = new User();
+		
+		user.setUser_name(name);
+		user.setAccount(account);
+		user.setEmail(email);
+		user.setPassword(passwordHash);
+		
+		
+		if(avatar != null){
+			String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
+			try {
+				FileUtils.copyInputStreamToFile(avatar.getInputStream(), new File(realpath,account+".png"));
+				user.setAvatar("upload/"+account+".png");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		return userService.save(user);
+		
+	}
 
 
 }

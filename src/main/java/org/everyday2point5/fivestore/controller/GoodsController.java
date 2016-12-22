@@ -52,12 +52,13 @@ public class GoodsController {
 		User user = getCurrentUser(request);
 		if(user != null){
 			goods.setUser(user);
+			
 		}
 		if(goods_img != null){
 			String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
 			try {
-				FileUtils.copyInputStreamToFile(goods_img.getInputStream(), new File(realpath,goods_img+".png"));
-				goods.setGoods_img("upload/"+goods_img+".png");
+				FileUtils.copyInputStreamToFile(goods_img.getInputStream(), new File(realpath,title+".png"));
+				goods.setGoods_img("upload/"+title+".png");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
