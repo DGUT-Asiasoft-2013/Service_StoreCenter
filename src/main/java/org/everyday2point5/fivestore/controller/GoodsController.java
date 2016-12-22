@@ -2,6 +2,7 @@ package org.everyday2point5.fivestore.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
@@ -56,9 +57,13 @@ public class GoodsController {
 		goods.setPrice(price);
 		goods.setGoods_count(goods_count);
 		User user = getCurrentUser(request);
+		String  randomNum = String.valueOf(new Random().nextInt(1000000));
+		String goods_id = new java.sql.Timestamp(System.currentTimeMillis()).toString()+randomNum;
+		
+		goods.setGoods_id(goods_id);
+		
 		if(user != null){
 			goods.setUser(user);
-			
 		}
 		if(goods_img != null){
 			String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
