@@ -2,6 +2,8 @@ package org.everyday2point5.fivestore.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,9 +11,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.everyday2point5.fivestore.entity.Comment;
 import org.everyday2point5.fivestore.entity.Goods;
+import org.everyday2point5.fivestore.entity.Order;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.service.ICommentService;
 import org.everyday2point5.fivestore.service.IGoodsService;
+import org.everyday2point5.fivestore.service.IOrderService;
 import org.everyday2point5.fivestore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 @RestController
 @RequestMapping("/api")
@@ -33,7 +38,8 @@ public class GoodsController {
 	ICommentService comentsService;
 	@Autowired
 	IUserService userService;
-
+	@Autowired
+	IOrderService orderService;
 
 	@RequestMapping(value="/addGoods", method=RequestMethod.POST)
 	public Goods addGoods(
@@ -170,5 +176,28 @@ public class GoodsController {
 		}else{
 			return false;
 		}
+	}
+	
+	@RequestMapping(value="/buy/{goods_id}", method=RequestMethod.POST)
+	public Order buy(
+			@PathVariable Integer goods_id,
+			@RequestParam String name,
+			@RequestParam String phone,
+			@RequestParam String address,
+			HttpServletRequest  request
+			){
+		Order order = new Order();
+		order.setName(name);
+		order.setAddress(address);
+		order.setPhone(phone);
+		User user = getCurrentUser(request);
+		Integer user_id = user.getId();
+		order.setGoods_id(goods_id);
+		int randomNum = new Random().nextInt(100);
+		Integer order_num = user_id+20161222+randomNum;
+		order.setOrder_num(order_num);
+		order.setStatus(0);
+		return orderService.save(order);
+		
 	}
 }
