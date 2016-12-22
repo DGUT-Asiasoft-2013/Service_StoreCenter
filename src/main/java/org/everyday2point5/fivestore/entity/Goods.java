@@ -27,17 +27,20 @@ public class Goods  extends BaseEntity implements Serializable {
 	User user;
 	String goods_img;
 	String text;
-	String salerName;
+	String sale_name;
 	float price;
 	
 	Date createDate, editDate;
 	
-	public String getSalerName() {
-		return salerName;
+
+
+	public String getSale_name() {
+		return sale_name;
 	}
 
-	public void setSalerName(String salerName) {
-		this.salerName = salerName;
+
+	public void setSale_name(String sale_name) {
+		this.sale_name = sale_name;
 	}
 
 

@@ -59,9 +59,9 @@ public class GoodsController {
 		User user = getCurrentUser(request);
 		String  randomNum = String.valueOf(new Random().nextInt(1000000));
 		String goods_id = new java.sql.Timestamp(System.currentTimeMillis()).toString()+randomNum;
-		
+		String sale_name = user.getUser_name();
 		goods.setGoods_id(goods_id);
-		
+		goods.setSale_name(sale_name);
 		if(user != null){
 			goods.setUser(user);
 		}
