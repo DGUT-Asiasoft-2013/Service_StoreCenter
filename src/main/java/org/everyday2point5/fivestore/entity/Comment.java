@@ -22,10 +22,20 @@ public class Comment  extends BaseEntity  implements Serializable{
 	int order_id;
 	User author;	
 	Goods goods;
-
+	String goods_id;
 	String text;
 	Date createDate, editDate;
 	
+	
+	
+	public String getGoods_id() {
+		return goods_id;
+	}
+
+	public void setGoods_id(String goods_id) {
+		this.goods_id = goods_id;
+	}
+
 	public String getText() {
 		return text;
 	}

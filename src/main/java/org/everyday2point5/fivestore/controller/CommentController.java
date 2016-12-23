@@ -39,16 +39,16 @@ public class CommentController {
 		return userService.findById(uid);
 	}
 	
-	@RequestMapping("/goods/{goods_id}/comments/{page}")
+	@RequestMapping(value="/goods/{goods_id}/comments/{page}",method=RequestMethod.GET)
 	public Page<Comment> getCommentsOfGoods(
-			@PathVariable int goods_id,
+			@PathVariable String goods_id,
 			@PathVariable int page){
 		return commentService.findCommentsOfGoods(goods_id, page);
 	}
 	
-	@RequestMapping("/goods/{goods_id}/comments")
+	@RequestMapping(value="/goods/{goods_id}/comments",method=RequestMethod.GET)
 	public Page<Comment>getCommentOfGoods(
-			@PathVariable int goods_id){
+			@PathVariable String  goods_id){
 		return commentService.findCommentsOfGoods(goods_id, 0);
 	}
 
