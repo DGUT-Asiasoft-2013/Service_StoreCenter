@@ -11,18 +11,35 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 @Component
 @Service
 @Transactional
 public class DefaultCommentService implements ICommentService{
+
+
 	@Autowired
-	ICommentReposity repo;
-	
+	ICommentReposity commentRepo;
+
 	@Override
-	public Page<Comment> getComments(String goods_id,int page) {
-		Sort sort = new Sort(Direction.DESC, "createDate");
-		PageRequest request = new PageRequest(page, 10, sort);
-		return repo.findCommentsById(goods_id, request);
+	public Page<Comment> findCommentsOfArticle(int articleId, int page) {
+
+		Sort sort=new Sort(Direction.DESC,"createDate");
+		PageRequest pageRequest=new PageRequest(page, 10,sort);
+		return commentRepo.findAllOfGoodsId(articleId,pageRequest);
 	}
+
+	@Override
+	public Comment save(Comment comment) {
+		
+		return commentRepo.save(comment);
+	}
+
+	@Override
+	public int getCommentCountOfArticle(int goodsId) {
+		// TODO Auto-generated method stub
+		return commentRepo.commentCountOfArticle(goodsId);
+	}
+
 
 }
