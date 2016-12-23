@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 
 public interface ICommentService {
 	
-	Page<Comment> findCommentsOfArticle(int goods,int page);
+	Page<Comment> findCommentsOfGoods(int goods,int page);
 	Comment save(Comment comment);
 	
 	int getCommentCountOfArticle(int goodsId);

@@ -33,7 +33,6 @@ public class CommentController {
 	@Autowired
 	ICommentService commentService;
 
-	@RequestMapping(value="/me",method=RequestMethod.GET)
 	public User getCurrentUser(HttpServletRequest request){
 		HttpSession session=request.getSession(true);
 		Integer uid=(Integer) session.getAttribute("uid");
@@ -41,16 +40,16 @@ public class CommentController {
 	}
 	
 	@RequestMapping("/goods/{goods_id}/comments/{page}")
-	public Page<Comment> getCommentsOfArticle(
-			@PathVariable int article_id,
+	public Page<Comment> getCommentsOfGoods(
+			@PathVariable int goods_id,
 			@PathVariable int page){
-		return commentService.findCommentsOfArticle(article_id, page);
+		return commentService.findCommentsOfGoods(goods_id, page);
 	}
 	
 	@RequestMapping("/goods/{goods_id}/comments")
-	public Page<Comment>getCommentOfArticle(
-			@PathVariable int article_id){
-		return commentService.findCommentsOfArticle(article_id, 0);
+	public Page<Comment>getCommentOfGoods(
+			@PathVariable int goods_id){
+		return commentService.findCommentsOfGoods(goods_id, 0);
 	}
 
 	@RequestMapping(value="/goods/{goods_id}/comments",method=RequestMethod.POST)
