@@ -19,17 +19,24 @@ public class Inbox extends BaseEntity implements Serializable{
 	 */
 	
 	
-	String content;
+	String inboxContent;
 	String send_name;
 	String rec_name;
 	boolean isread;
 	Date createDate;
+	String sign;
 	
-	public String getContent() {
-		return content;
+	public String getSign() {
+		return sign;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+	public String getInboxContent() {
+		return inboxContent;
+	}
+	public void setInboxContent(String content) {
+		this.inboxContent = content;
 	}
 	public String getSend_name() {
 		return send_name;
