@@ -9,4 +9,9 @@ public interface IOrderService {
 
 	Page<MyOrder> findAll(int page);
 
+
+
+
+	MyOrder findOneOrder(String order_id);
+
 }
