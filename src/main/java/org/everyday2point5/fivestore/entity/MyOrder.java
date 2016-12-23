@@ -17,22 +17,21 @@ import org.everyday2point5.fivestore.util.BaseEntity;
 public class MyOrder  extends BaseEntity implements Serializable{
 	int
 	status,
-	amount,
-	order_num,
-	goods_id;
+	amount;
+	String order_num;
+	String goods_id;
 	
 	String name, phone, address;
 	Date createDate, editDate;
 	
 	@Column
-	public int getGoods_id() {
+	public String getGoods_id() {
 		return goods_id;
 	}
 
-	public void setGoods_id(int goods_id) {
-		this.goods_id = goods_id;
+	public void setGoods_id(String goods_id2) {
+		this.goods_id = goods_id2;
 	}
-
 
 	
 	@Column(updatable = false)
@@ -109,12 +108,12 @@ public class MyOrder  extends BaseEntity implements Serializable{
 	}
 
 	@Column(unique = true)
-	public int getOrder_num() {
+	public String getOrder_num() {
 		return order_num;
 	}
 
-	public void setOrder_num(int order_num) {
-		this.order_num = order_num;
+	public void setOrder_num(String order_num2) {
+		this.order_num = order_num2;
 	}
 
 }

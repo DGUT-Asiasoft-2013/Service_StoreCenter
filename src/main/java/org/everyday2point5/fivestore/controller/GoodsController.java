@@ -60,6 +60,8 @@ public class GoodsController {
 		String  randomNum = String.valueOf(new Random().nextInt(1000000));
 		String goods_id = new java.sql.Timestamp(System.currentTimeMillis()).toString()+randomNum;
 		String sale_name = user.getUser_name();
+		
+		goods_id = goods_id.replace(":","").replace(".", "").replace(" ", "").replace("-", "");
 		goods.setGoods_id(goods_id);
 		goods.setSale_name(sale_name);
 		if(user != null){
@@ -186,11 +188,11 @@ public class GoodsController {
 	
 	@RequestMapping(value="/buy/{goods_id}", method=RequestMethod.POST)
 	public MyOrder buy(
-			@PathVariable Integer goods_id,
 			@RequestParam String name,
 			@RequestParam String phone,
 			@RequestParam String address,
 			@RequestParam int amount,
+			@PathVariable String goods_id,
 			HttpServletRequest  request
 			){
 		MyOrder order = new MyOrder();
@@ -201,11 +203,26 @@ public class GoodsController {
 		Integer user_id = user.getId();
 		order.setGoods_id(goods_id);
 		int randomNum = new Random().nextInt(1000000);
-		Integer order_num = user_id+20161222+randomNum;
+		String order_num = user_id+goods_id.substring(2, 10)+randomNum;
 		order.setOrder_num(order_num);
 		order.setStatus(1);//确认付款
 		order.setAmount(amount);
 		return orderService.save(order);
+		
+	}
+	
+	@RequestMapping(value="/order")
+	public Page<MyOrder> getOrder0(){
+		return getOrder(0);
+		
+		
+	}
+	
+	@RequestMapping(value="/order/{page}")
+	public Page<MyOrder> getOrder(
+			@PathVariable int page){
+		return orderService.findAll(page);
+		
 		
 	}
 }
