@@ -142,7 +142,7 @@ public class GoodsController {
 			@RequestParam String text,
 			@RequestParam float price,
 			@RequestParam Integer goods_count,
-			@PathVariable Integer goods_id
+			@PathVariable String goods_id
 			){
 		
 		Goods goods = goodsService.findOne(goods_id);
@@ -158,7 +158,7 @@ public class GoodsController {
 	
 	@RequestMapping(value="goods/{goods_id}/comments/", method=RequestMethod.GET)
 	public Page<Comment> getFirstComments(
-			@PathVariable int goods_id
+			@PathVariable String goods_id
 			){
 				return comentsService.getComments(goods_id, 0);
 		
@@ -166,7 +166,7 @@ public class GoodsController {
 	
 	@RequestMapping(value="goods/{goods_id}/comments/{page}", method=RequestMethod.GET)
 	public Page<Comment> getComments(
-			@PathVariable int goods_id,
+			@PathVariable String goods_id,
 			@PathVariable int page){
 				return comentsService.getComments(goods_id, page);
 		
@@ -175,7 +175,7 @@ public class GoodsController {
 	
 	@RequestMapping(value = "/goods/{goods_id}/deleteGoods", method = RequestMethod.DELETE)
 	public boolean deleteGoods(
-			@PathVariable Integer goods_id){
+			@PathVariable String goods_id){
 		Goods goods = goodsService.findOne(goods_id);
 		if(goods!=null){
 			goodsService.delete(goods);
@@ -202,7 +202,9 @@ public class GoodsController {
 		User user = getCurrentUser(request);
 		Integer user_id = user.getId();
 		order.setGoods_id(goods_id);
-		int randomNum = new Random().nextInt(1000000);
+		Goods goods = goodsService.findOne(goods_id);
+		order.setGoods(goods);
+		int randomNum = new Random().nextInt(100);
 		String order_num = user_id+goods_id.substring(2, 10)+randomNum;
 		order.setOrder_num(order_num);
 		order.setStatus(1);//确认付款
@@ -211,18 +213,19 @@ public class GoodsController {
 		
 	}
 	
-	@RequestMapping(value="/order")
-	public Page<MyOrder> getOrder0(){
+	@RequestMapping(value="/order",method=RequestMethod.GET)
+	public Page<MyOrder> getOrder(){
 		return getOrder(0);
-		
-		
 	}
 	
-	@RequestMapping(value="/order/{page}")
+	@RequestMapping(value="/order/{page}",method=RequestMethod.GET)
 	public Page<MyOrder> getOrder(
-			@PathVariable int page){
+			@PathVariable int page
+			){
 		return orderService.findAll(page);
 		
 		
 	}
+	
+
 }

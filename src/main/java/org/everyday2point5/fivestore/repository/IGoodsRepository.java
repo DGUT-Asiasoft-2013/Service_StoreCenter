@@ -12,11 +12,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IGoodsRepository  extends PagingAndSortingRepository<Goods, Integer>{
 	
-	@Query("from Goods goods where goods.id = ?1")
+	@Query("from Goods goods where goods.user.id = ?1")
 	Page<Goods> findAllGoods(int id,Pageable request);
 
 	@Query("from Goods g where g.title like '%?1%'")
 	Page<Goods> search(String text, Pageable request);
+	
+	@Query("from Goods g where g.goods_id = ?1")
+	Goods findOneGoods(String goods_id);
 
 
 

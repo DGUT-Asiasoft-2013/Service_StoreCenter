@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Service
-@Transactional
 public class DefaultOrderService implements IOrderService {
 	@Autowired 
 	IOrderRepository  repo;
@@ -24,7 +23,7 @@ public class DefaultOrderService implements IOrderService {
 	@Override
 	public Page<MyOrder> findAll(int page) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
-		PageRequest request = new PageRequest(page, 6, sort);
+		PageRequest request = new PageRequest(page, 10, sort);
 		return repo.findAll(request);
 	}
 

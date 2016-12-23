@@ -23,7 +23,17 @@ public class MyOrder  extends BaseEntity implements Serializable{
 	
 	String name, phone, address;
 	Date createDate, editDate;
+	Goods goods;
 	
+	@Column
+	public Goods getGoods() {
+		return goods;
+	}
+
+	public void setGoods(Goods goods) {
+		this.goods = goods;
+	}
+
 	@Column
 	public String getGoods_id() {
 		return goods_id;
@@ -115,5 +125,7 @@ public class MyOrder  extends BaseEntity implements Serializable{
 	public void setOrder_num(String order_num2) {
 		this.order_num = order_num2;
 	}
+
+
 
 }
