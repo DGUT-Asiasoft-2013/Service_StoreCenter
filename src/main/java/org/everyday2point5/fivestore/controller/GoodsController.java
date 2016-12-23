@@ -61,7 +61,8 @@ public class GoodsController {
 		String goods_id = new java.sql.Timestamp(System.currentTimeMillis()).toString()+randomNum;
 		String sale_name = user.getUser_name();
 		
-		goods_id = goods_id.replace(":","").replace(".", "").replace(" ", "").replace("-", "");
+		goods_id = goods_id.replace(":","").replace(".", "").replace(" ", "");
+		goods_id = goods_id.replace("-", "");
 		goods.setGoods_id(goods_id);
 		goods.setSale_name(sale_name);
 		if(user != null){
