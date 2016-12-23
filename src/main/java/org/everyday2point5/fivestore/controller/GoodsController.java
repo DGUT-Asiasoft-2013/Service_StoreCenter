@@ -213,19 +213,7 @@ public class GoodsController {
 		
 	}
 	
-	@RequestMapping(value="/order",method=RequestMethod.GET)
-	public Page<MyOrder> getOrder(){
-		return getOrder(0);
-	}
-	
-	@RequestMapping(value="/order/{page}",method=RequestMethod.GET)
-	public Page<MyOrder> getOrder(
-			@PathVariable int page
-			){
-		return orderService.findAll(page);
-		
-		
-	}
+
 	
 
 }
