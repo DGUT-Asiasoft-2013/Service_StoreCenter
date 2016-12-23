@@ -20,27 +20,28 @@ public class Inbox extends BaseEntity implements Serializable{
 	
 	
 	String content;
-	int send_id;
-	int rec_id;
+	String send_name;
+	String rec_name;
 	boolean isread;
 	Date createDate;
+	
 	public String getContent() {
 		return content;
 	}
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getSend_id() {
-		return send_id;
+	public String getSend_name() {
+		return send_name;
 	}
-	public void setSend_id(int send_id) {
-		this.send_id = send_id;
+	public void setSend_name(String send_name) {
+		this.send_name = send_name;
 	}
-	public int getRec_id() {
-		return rec_id;
+	public String getRec_name() {
+		return rec_name;
 	}
-	public void setRec_id(int rec_id) {
-		this.rec_id = rec_id;
+	public void setRec_name(String rec_name) {
+		this.rec_name = rec_name;
 	}
 	public boolean isIsread() {
 		return isread;
