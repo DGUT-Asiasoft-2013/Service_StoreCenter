@@ -19,13 +19,30 @@ public class Comment  extends BaseEntity  implements Serializable{
 	 *订单id
 	 *内容
 	 *创建时间 */
-	int 
-	order_id;
-	User author;
-	
+	int order_id;
+	User author;	
 	Goods goods;
-
+	String goods_id;
+	String text;
 	Date createDate, editDate;
+	
+	
+	
+	public String getGoods_id() {
+		return goods_id;
+	}
+
+	public void setGoods_id(String goods_id) {
+		this.goods_id = goods_id;
+	}
+
+	public String getText() {
+		return text;
+	}
+	
+	public void setText(String text) {
+		this.text = text;
+	}
 	
 	@Column(updatable = false)
 	public Date getCreateDate() {
