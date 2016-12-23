@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 
 public interface ICommentService {
 @Autowired
-	Page<Comment> getComments(int goods_id,int page);
+	Page<Comment> getComments(String goods_id,int page);
 
 }

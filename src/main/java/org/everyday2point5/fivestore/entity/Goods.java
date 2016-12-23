@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.Transient;
-
 import org.everyday2point5.fivestore.util.BaseEntity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
