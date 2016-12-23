@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICommentReposity extends PagingAndSortingRepository<Goods, Integer>{
 	@Query("from Comment c where c.goods.id = ?1")
-	Page<Comment> findCommentsById(int goods_id, Pageable pageable);
+	Page<Comment> findCommentsById(String goods_id, Pageable pageable);
 
 }

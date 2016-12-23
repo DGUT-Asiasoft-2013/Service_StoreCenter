@@ -19,7 +19,7 @@ public class DefaultCommentService implements ICommentService{
 	ICommentReposity repo;
 	
 	@Override
-	public Page<Comment> getComments(int goods_id,int page) {
+	public Page<Comment> getComments(String goods_id,int page) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		PageRequest request = new PageRequest(page, 10, sort);
 		return repo.findCommentsById(goods_id, request);
