@@ -26,6 +26,13 @@ public class DefaultOrderService implements IOrderService {
 		PageRequest request = new PageRequest(page, 10, sort);
 		return repo.findAll(request);
 	}
+	@Override
+	public MyOrder findOneOrder(String order_id) {
+		return repo.findOneOrder(order_id);
+	}
+
+
+	
 
 }
 
