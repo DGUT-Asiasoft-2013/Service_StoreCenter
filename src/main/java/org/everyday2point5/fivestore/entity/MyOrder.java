@@ -24,7 +24,18 @@ public class MyOrder  extends BaseEntity implements Serializable{
 	String name, phone, address;
 	Date createDate, editDate;
 	Goods goods;
+	int buyer_id;
 	
+
+	@Column
+	public int getBuyer_id() {
+		return buyer_id;
+	}
+
+	public void setBuyer_id(int buyer_id) {
+		this.buyer_id = buyer_id;
+	}
+
 	@Column
 	public Goods getGoods() {
 		return goods;

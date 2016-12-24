@@ -207,6 +207,9 @@ public class GoodsController {
 		order.setGoods(goods);
 		int randomNum = new Random().nextInt(100);
 		String order_num = user_id+goods_id.substring(2, 10)+randomNum;
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		order.setBuyer_id(uid);
 		order.setOrder_num(order_num);
 		order.setStatus(1);//确认付款
 		order.setAmount(amount);
