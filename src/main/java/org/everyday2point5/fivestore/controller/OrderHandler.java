@@ -1,5 +1,7 @@
 package org.everyday2point5.fivestore.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.everyday2point5.fivestore.entity.MyOrder;
 import org.everyday2point5.fivestore.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +19,15 @@ public class OrderHandler {
 	IOrderService orderService;
 
 	@RequestMapping(value="/order",method=RequestMethod.GET)
-	public Page<MyOrder> getOrder(){
-		return getOrder(0);
+	public Page<MyOrder> getOrder(
+			HttpServletRequest request){
+		return getOrder(0, request);
 	}
 	
 	@RequestMapping(value="/order/{page}",method=RequestMethod.GET)
 	public Page<MyOrder> getOrder(
-			@PathVariable int page
+			@PathVariable int page,
+			HttpServletRequest request
 			){
 		return orderService.findAll(page);
 	}
