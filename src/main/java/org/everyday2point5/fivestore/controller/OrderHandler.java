@@ -40,6 +40,17 @@ public class OrderHandler {
 		
 	}
 	
+	@RequestMapping(value="/confirmGoods" ,method=RequestMethod.POST)
+	public MyOrder confirmGoods(
+			@RequestParam String order_id){
+			MyOrder order = orderService.findOneOrder(order_id);
+			order.setStatus(0);
+			return orderService.save(order);
+		
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/cancleOrder" ,method=RequestMethod.POST)
 	public MyOrder cancleOrder(
@@ -83,3 +94,4 @@ public class OrderHandler {
 	}
 	
 }
+
