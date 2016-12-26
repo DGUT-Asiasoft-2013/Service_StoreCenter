@@ -29,21 +29,7 @@ public class OrderHandler {
 	@Autowired
 	IGoodsService goodsService;
 	
-/*	@RequestMapping(value="/order",method=RequestMethod.GET)
-	public Page<Goods> getOrder(
-			HttpServletRequest request){
-		return getOrder(0, request);
-	}
-	
-	@RequestMapping(value="/order/{page}",method=RequestMethod.GET)
-	public Page<Goods> getOrder(
-			@PathVariable int page,
-			HttpServletRequest request
-			){
-		HttpSession session = request.getSession();
-		Integer uid = (Integer) session.getAttribute("uid");
-		return orderService.findMyOrders(page,uid);
-	}*/
+
 	
 	@RequestMapping(value="/sendGoods" ,method=RequestMethod.POST)
 	public MyOrder sendGoods(
@@ -76,10 +62,24 @@ public class OrderHandler {
 			@PathVariable int page,
 			HttpServletRequest request
 			){
-		
-
 		return orderService.findAll(page);
 	}
 	
+	
+	@RequestMapping(value="/order/myDeal",method=RequestMethod.GET)
+	public Page<MyOrder> getMyDeal(
+			HttpServletRequest request){
+		return getMyDeal(0, request);
+	}
+	
+	@RequestMapping(value="/order/myDeal/{page}",method=RequestMethod.GET)
+	public Page<MyOrder> getMyDeal(
+			@PathVariable int page,
+			HttpServletRequest request
+			){
+		
+
+		return orderService.findAllMyDeal(page);
+	}
 	
 }

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 public interface ICommentService {
-	@Autowired
 	Page<Comment> findCommentsOfGoods(String goods,int page);
 	Comment save(Comment comment);
 	

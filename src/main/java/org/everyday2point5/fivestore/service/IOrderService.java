@@ -17,5 +17,11 @@ public interface IOrderService {
 	Page<MyOrder> findAll(int page);
 
 
+	Page<MyOrder> findAllMyDeal(int page);
+
+
+	String findOrderNum(String goods_id);
+
+	
 }
 

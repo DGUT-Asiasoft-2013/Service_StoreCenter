@@ -22,11 +22,10 @@ public class DefaultCommentService implements ICommentService{
 	ICommentReposity commentRepo;
 
 	@Override
-	public Page<Comment> findCommentsOfGoods(String articleId, int page) {
-
+	public Page<Comment> findCommentsOfGoods(String goods_id, int page) {
 		Sort sort=new Sort(Direction.DESC,"createDate");
 		PageRequest pageRequest=new PageRequest(page, 10,sort);
-		return commentRepo.findAllOfGoodsId(articleId,pageRequest);
+		return commentRepo.findAllOfGoodsId(goods_id,pageRequest);
 	}
 
 	@Override

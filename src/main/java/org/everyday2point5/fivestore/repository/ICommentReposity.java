@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICommentReposity extends PagingAndSortingRepository<Comment, Integer>{
 	
-	@Query("from Comment comment where comment.goods_id=?1")
+	@Query("from Comment comment where comment.goods_id= ?1")
 	Page<Comment> findAllOfGoodsId(String goodsId,Pageable page);
 
 	@Query("select count(*) from Comment comment where comment.goods_id = ?1")

@@ -43,6 +43,18 @@ public class DefaultOrderService implements IOrderService {
 		PageRequest request = new PageRequest(page, 10, sort);
 		return  repo.findAllOrders(request);
 	}
+	
+	@Override
+	public Page<MyOrder> findAllMyDeal(int page) {
+		Sort sort = new Sort(Direction.DESC, "createDate");
+		PageRequest request = new PageRequest(page, 10, sort);
+		return  repo.findAllDeals(request);
+	}
+	@Override
+	public String findOrderNum(String goods_id) {
+		// TODO Auto-generated method stub
+		return repo.findOrderNum(goods_id);
+	}
 
 
 	

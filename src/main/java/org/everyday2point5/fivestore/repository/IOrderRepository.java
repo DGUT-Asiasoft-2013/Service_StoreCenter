@@ -16,6 +16,12 @@ public interface IOrderRepository  extends PagingAndSortingRepository<MyOrder, I
 
 	@Query("from  MyOrder myorder where myorder.status = 1")
 	Page<MyOrder> findAllOrders(Pageable request);
+	
+	@Query("from  MyOrder myorder where myorder.status = 1 or myorder.status = 2 or myorder.status = 3 or myorder.status = 0")
+	Page<MyOrder> findAllDeals(Pageable request);
+
+	@Query("select order_num from  MyOrder myorder where myorder.goods_id = ?1")
+	String findOrderNum(String goods_id);
 
 	
 

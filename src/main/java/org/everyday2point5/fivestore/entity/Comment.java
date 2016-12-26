@@ -10,8 +10,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
+import org.junit.Ignore;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties
 @Entity
 public class Comment  extends BaseEntity  implements Serializable{
 	/*id
@@ -19,15 +22,23 @@ public class Comment  extends BaseEntity  implements Serializable{
 	 *订单id
 	 *内容
 	 *创建时间 */
-	int order_id;
+
 	User author;	
 	Goods goods;
 	String goods_id;
 	String text;
 	Date createDate, editDate;
+	String order_num;
 	
-	
-	
+	@Column
+	public String getOrder_num() {
+		return order_num;
+	}
+
+	public void setOrder_num(String order_num) {
+		this.order_num = order_num;
+	}
+	@Column
 	public String getGoods_id() {
 		return goods_id;
 	}
@@ -35,7 +46,7 @@ public class Comment  extends BaseEntity  implements Serializable{
 	public void setGoods_id(String goods_id) {
 		this.goods_id = goods_id;
 	}
-
+	@Column
 	public String getText() {
 		return text;
 	}
@@ -71,6 +82,7 @@ public class Comment  extends BaseEntity  implements Serializable{
 		createDate = new Date();
 		editDate = new Date();
 	}
+	@Column
 	public Goods getGoods() {
 		return goods;
 	}
@@ -78,12 +90,7 @@ public class Comment  extends BaseEntity  implements Serializable{
 		this.goods = goods;
 	}
 	
-	public int getOrder_id() {
-		return order_id;
-	}
-	public void setOrder_id(int order_id) {
-		this.order_id = order_id;
-	}
+
 	@ManyToOne(optional = false)
 	public User getAuthor() {
 		return author;

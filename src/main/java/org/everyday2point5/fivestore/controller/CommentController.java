@@ -8,6 +8,7 @@ import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.service.ICommentService;
 import org.everyday2point5.fivestore.service.IGoodsService;
+import org.everyday2point5.fivestore.service.IOrderService;
 import org.everyday2point5.fivestore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,6 +33,9 @@ public class CommentController {
 	
 	@Autowired
 	ICommentService commentService;
+	
+	@Autowired
+	IOrderService orderService;
 
 	public User getCurrentUser(HttpServletRequest request){
 		HttpSession session=request.getSession(true);
@@ -52,17 +56,18 @@ public class CommentController {
 		return commentService.findCommentsOfGoods(goods_id, 0);
 	}
 
-	@RequestMapping(value="/goods/{goods_id}/comments",method=RequestMethod.POST)
+	@RequestMapping(value="/goods/{goods_id}/{order_num}/comments",method=RequestMethod.POST)
 	public Comment postComment(
+			@PathVariable String order_num,
 			@PathVariable String goods_id,
 			@RequestParam String text,
 			HttpServletRequest request){
 		User me=getCurrentUser(request);
-		Goods goods=goodsService.findOne(goods_id);
 		Comment comment=new Comment();
 		comment.setAuthor(me);
-		comment.setGoods(goods);
+		comment.setGoods_id(goods_id);
 		comment.setText(text);
+		comment.setOrder_num(order_num);
 		return commentService.save(comment);
 		
 	}
