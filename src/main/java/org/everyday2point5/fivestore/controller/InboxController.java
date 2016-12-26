@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -44,7 +44,7 @@ public class InboxController {
 
 		Inbox inbox=new Inbox();
 		inbox.setInboxContent(content);
-		inbox.setSend_name(send_name);
+		inbox.setSend_user(getUser(send_name));
 		inbox.setIsread(false);
 		inbox.setCreateDate(curDate);
 
@@ -55,7 +55,9 @@ public class InboxController {
 		
 		User user =userService.findById(uid);
 		if(user!=null){
-			inbox.setRec_name(user.getUser_name());
+			inbox.setRec_user(getUser(user.getUser_name()));
+		}else{
+			//服务器无登陆状态
 		}
 		String sign;
 		if(user.getUser_name().compareTo(send_name)>0)
@@ -134,6 +136,11 @@ public class InboxController {
 		return inboxService.inboxGetChat(sign,page);
 	}
 	
-
+	@RequestMapping(value = "/getUser", method=RequestMethod.GET)
+	public User getUser(
+			@RequestParam  String name
+			){
+		return userService.findByName(name);
+	}
 	
 }

@@ -59,6 +59,11 @@ public class DefaultUserService implements IUserService {
 		return userRepo.findByEmail(email);
 	}
 
+	@Override
+	public User findByName(String name) {
+		// TODO Auto-generated method stub
+		return userRepo.findByName(name);
+	}
 
 
 
@@ -66,6 +71,8 @@ public class DefaultUserService implements IUserService {
 	public User save(User user) {
 		return userRepo.save(user);
 	}
+
+
 
 
 
