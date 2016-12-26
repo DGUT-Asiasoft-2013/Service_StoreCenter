@@ -65,6 +65,7 @@ public class GoodsController {
 		goods_id = goods_id.replace("-", "");
 		goods.setGoods_id(goods_id);
 		goods.setSale_name(sale_name);
+		goods.setStatus(0); //未購買
 		if(user != null){
 			goods.setUser(user);
 		}
@@ -203,8 +204,10 @@ public class GoodsController {
 		User user = getCurrentUser(request);
 		Integer user_id = user.getId();
 		order.setGoods_id(goods_id);
-		Goods goods = goodsService.findOne(goods_id);
+		Goods goods = findOne(goods_id);
 		order.setGoods(goods);
+		goods.setStatus(1);//已購買
+		goodsService.save(goods);
 		int randomNum = new Random().nextInt(100);
 		String order_num = user_id+goods_id.substring(2, 10)+randomNum;
 		HttpSession session = request.getSession();
@@ -217,7 +220,11 @@ public class GoodsController {
 		
 	}
 	
-
+	@RequestMapping(value="goods/{goods_id}", method=RequestMethod.GET)
+	public Goods findOne(
+			@PathVariable String goods_id){
+		return goodsService.findOne(goods_id);
+	}
 	
 
 }

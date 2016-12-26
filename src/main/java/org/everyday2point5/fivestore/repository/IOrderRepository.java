@@ -1,5 +1,6 @@
 package org.everyday2point5.fivestore.repository;
 
+import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.MyOrder;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.domain.Page;
@@ -13,8 +14,10 @@ public interface IOrderRepository  extends PagingAndSortingRepository<MyOrder, I
 	@Query("from MyOrder myorder where myorder.order_num= ?1")
 	MyOrder findOneOrder(String order_id);
 
-	@Query("from  MyOrder myorder where myorder.buyer_id = ?1")
-	Page<MyOrder> findAllOrders(Pageable request, Integer user_id);
+	@Query("from  MyOrder myorder where myorder.status = 1")
+	Page<MyOrder> findAllOrders(Pageable request);
+
 	
 
+	
 }

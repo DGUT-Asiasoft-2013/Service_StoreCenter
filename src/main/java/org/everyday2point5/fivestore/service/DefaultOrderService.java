@@ -1,5 +1,6 @@
 package org.everyday2point5.fivestore.service;
 
+import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.MyOrder;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.repository.IOrderRepository;
@@ -21,12 +22,12 @@ public class DefaultOrderService implements IOrderService {
 	public MyOrder save(MyOrder order) {
 		return repo.save(order);
 	}
-	@Override
-	public Page<MyOrder> findAll(int page,Integer user_id) {
+/*	@Override
+	public Page<MyOrder> findAll(int page,Integer user_id, String goods_id) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		PageRequest request = new PageRequest(page, 10, sort);
-		return repo.findAllOrders(request,user_id);
-	}
+		return repo.findAllOrders(request,user_id, goods_id);
+	}*/
 	@Override
 	public MyOrder findOneOrder(String order_id) {
 		return repo.findOneOrder(order_id);
@@ -34,7 +35,13 @@ public class DefaultOrderService implements IOrderService {
 	@Override
 	public User findOne(Integer uid) {
 		// TODO Auto-generated method stub
-		return null;
+		return findOne(uid);
+	}
+	@Override
+	public Page<MyOrder> findAll(int page) {
+		Sort sort = new Sort(Direction.DESC, "createDate");
+		PageRequest request = new PageRequest(page, 10, sort);
+		return  repo.findAllOrders(request);
 	}
 
 
