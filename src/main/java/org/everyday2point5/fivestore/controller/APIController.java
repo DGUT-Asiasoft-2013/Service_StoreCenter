@@ -49,12 +49,12 @@ public class APIController {
 			@RequestParam String account,
 			@RequestParam String passwordHash,
 			HttpServletRequest request){
-		User obj = userService.findByAccount(account);
-		if( obj != null && obj.getPassword().equals(passwordHash)){
+		User user = userService.findByAccount(account);
+		if( user != null && user.getPassword().equals(passwordHash)){
 
 			HttpSession session = request.getSession(true);
-			session.setAttribute("uid", obj.getId());
-			return obj;
+			session.setAttribute("uid", user.getId());
+			return user;
 		}else{
 			return null;
 		}

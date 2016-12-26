@@ -3,8 +3,10 @@ package org.everyday2point5.fivestore.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.MyOrder;
 import org.everyday2point5.fivestore.entity.User;
+import org.everyday2point5.fivestore.service.IGoodsService;
 import org.everyday2point5.fivestore.service.IOrderService;
 import org.everyday2point5.fivestore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +26,24 @@ public class OrderHandler {
 	@Autowired
 	IUserService userService;
 	
-	@RequestMapping(value="/order",method=RequestMethod.GET)
-	public Page<MyOrder> getOrder(
+	@Autowired
+	IGoodsService goodsService;
+	
+/*	@RequestMapping(value="/order",method=RequestMethod.GET)
+	public Page<Goods> getOrder(
 			HttpServletRequest request){
 		return getOrder(0, request);
 	}
 	
 	@RequestMapping(value="/order/{page}",method=RequestMethod.GET)
-	public Page<MyOrder> getOrder(
+	public Page<Goods> getOrder(
 			@PathVariable int page,
 			HttpServletRequest request
 			){
 		HttpSession session = request.getSession();
 		Integer uid = (Integer) session.getAttribute("uid");
-	
-
-		return orderService.findAll(page,uid);
-	}
+		return orderService.findMyOrders(page,uid);
+	}*/
 	
 	@RequestMapping(value="/sendGoods" ,method=RequestMethod.POST)
 	public MyOrder sendGoods(
@@ -71,5 +74,24 @@ public class OrderHandler {
 			return orderService.save(order);
 		
 	}
+	
+	
+	@RequestMapping(value="/order",method=RequestMethod.GET)
+	public Page<MyOrder> getOrder(
+			HttpServletRequest request){
+		return getOrder(0, request);
+	}
+	
+	@RequestMapping(value="/order/{page}",method=RequestMethod.GET)
+	public Page<MyOrder> getOrder(
+			@PathVariable int page,
+			HttpServletRequest request
+			){
+		
+
+		return orderService.findAll(page);
+	}
+	
+	
 }
 

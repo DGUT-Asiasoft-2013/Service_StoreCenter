@@ -8,12 +8,14 @@ public interface IOrderService {
 
 	MyOrder save(MyOrder order);
 
-	Page<MyOrder> findAll(int page,Integer user_id);
-
 
 	MyOrder findOneOrder(String order_id);
 
 	User findOne(Integer uid);
+
+
+	Page<MyOrder> findAll(int page);
+
 
 }
 

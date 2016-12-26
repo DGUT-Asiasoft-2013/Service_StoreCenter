@@ -20,7 +20,9 @@ public class Goods  extends BaseEntity implements Serializable {
 	 * 商品名称， 商品编号 图片
 	 */
 	String title;
-	int goods_count;
+	int goods_count, status;
+
+
 	String goods_id;
 	User user;
 	String goods_img;
@@ -35,7 +37,14 @@ public class Goods  extends BaseEntity implements Serializable {
 	public String getSale_name() {
 		return sale_name;
 	}
+	public int getStatus() {
+		return status;
+	}
 
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public void setSale_name(String sale_name) {
 		this.sale_name = sale_name;
