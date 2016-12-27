@@ -43,6 +43,16 @@ public class APIController {
 	}
 
 	
+	@RequestMapping(value = "/me", method=RequestMethod.GET)
+	public User  getMe(
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		User user =userService.findById(uid);
+		return user;
+	}
+
+	
 		
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
 	public @ResponseBody User login(

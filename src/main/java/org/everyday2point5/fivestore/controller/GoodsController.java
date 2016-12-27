@@ -117,9 +117,6 @@ public class GoodsController {
 	}
 
 
-
-
-
 	@RequestMapping(value="/search", method=RequestMethod.POST)
 	public Page<Goods> searchArticle(
 			@RequestParam  String text
