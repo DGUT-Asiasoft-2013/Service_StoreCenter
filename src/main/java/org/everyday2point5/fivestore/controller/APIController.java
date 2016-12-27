@@ -70,6 +70,21 @@ public class APIController {
 		}
 	}
 
+	@RequestMapping(value="/passwordrecover",method=RequestMethod.POST)
+	public boolean resetPassword(
+	@RequestParam String email,
+	@RequestParam String passwordHash
+	){
+		User user=userService.findByEmail(email);
+		if(user==null){
+			return false;
+		}else{
+			user.setPassword(passwordHash);
+			userService.save(user);
+			return true;
+		}
+	}
+	
 	@RequestMapping(value = "/register", method=RequestMethod.POST)
 	public @ResponseBody User register(
 			@RequestParam String name,
@@ -102,5 +117,36 @@ public class APIController {
 		
 	}
 
+	@RequestMapping(value = "/passwordChanges", method=RequestMethod.POST)
+	public @ResponseBody User passwordChanges(
+			@RequestParam String passwordHash,
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		
+		
+		User user =userService.findById(uid);
+		if( user != null && passwordHash!=null){
+			user.setPassword(passwordHash);
+			return userService.changePassword(user);
+		}else{
+			return null;
+		}
+	}
+	
+	@RequestMapping(value = "/money/recharge", method=RequestMethod.POST)
+	public User recharge(
+			@RequestParam float money,
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		
+		
+		User user =userService.findById(uid);
+		
+		user.setMoney(money);
+		
+		return userService.save(user);
+	}
 
 }
