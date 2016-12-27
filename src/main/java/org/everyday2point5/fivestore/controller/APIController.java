@@ -60,6 +60,21 @@ public class APIController {
 		}
 	}
 
+	@RequestMapping(value="/passwordrecover",method=RequestMethod.POST)
+	public boolean resetPassword(
+	@RequestParam String email,
+	@RequestParam String passwordHash
+	){
+		User user=userService.findByEmail(email);
+		if(user==null){
+			return false;
+		}else{
+			user.setPassword(passwordHash);
+			userService.save(user);
+			return true;
+		}
+	}
+	
 	@RequestMapping(value = "/register", method=RequestMethod.POST)
 	public @ResponseBody User register(
 			@RequestParam String name,
