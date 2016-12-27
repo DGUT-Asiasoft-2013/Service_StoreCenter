@@ -112,7 +112,8 @@ public class APIController {
 		
 		User user =userService.findById(uid);
 		if( user != null && passwordHash!=null){
-			return userService.changePassword(passwordHash);
+			user.setPassword(passwordHash);
+			return userService.changePassword(user);
 		}else{
 			return null;
 		}

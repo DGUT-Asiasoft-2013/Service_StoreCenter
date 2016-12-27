@@ -8,7 +8,7 @@ public interface IUserService {
 	User create(String account, String passwordHash);
 	
 	void login(String account, String passwordHash);
-	User changePassword(String newPasswordHash);
+	User changePassword(User user);
 	void logout();
 
 	User save(User user);

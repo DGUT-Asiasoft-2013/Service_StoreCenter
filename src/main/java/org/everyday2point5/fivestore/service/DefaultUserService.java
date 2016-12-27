@@ -32,9 +32,7 @@ public class DefaultUserService implements IUserService {
 	
 
 	@Override
-	public User changePassword(String newPasswordHash) {
-		User user = new User();
-		user.setPassword(newPasswordHash);
+	public User changePassword(User user) {
 		return userRepo.save(user);
 	}
 
