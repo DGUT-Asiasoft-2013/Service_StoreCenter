@@ -160,23 +160,6 @@ public class GoodsController {
 	
 	
 	
-//	@RequestMapping(value="goods/{goods_id}/comments/", method=RequestMethod.GET)
-//	public Page<Comment> getFirstComments(
-//			@PathVariable String goods_id
-//			){
-//				return comentsService.getComments(goods_id, 0);
-//		
-//	}
-//	
-//	@RequestMapping(value="goods/{goods_id}/comments/{page}", method=RequestMethod.GET)
-//	public Page<Comment> getComments(
-//			@PathVariable String goods_id,
-//			@PathVariable int page){
-//				return comentsService.getComments(goods_id, page);
-//		
-//	}
-	
-	
 	@RequestMapping(value = "/goods/{goods_id}/deleteGoods", method = RequestMethod.DELETE)
 	public boolean deleteGoods(
 			@PathVariable String goods_id){
