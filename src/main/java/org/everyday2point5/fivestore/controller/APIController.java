@@ -133,5 +133,19 @@ public class APIController {
 		}
 	}
 	
+	@RequestMapping(value = "/money/recharge", method=RequestMethod.POST)
+	public User recharge(
+			@RequestParam float money,
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		
+		
+		User user =userService.findById(uid);
+		
+		user.setMoney(money);
+		
+		return userService.save(user);
+	}
 
 }
