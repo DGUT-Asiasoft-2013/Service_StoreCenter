@@ -2,6 +2,7 @@
 package org.everyday2point5.fivestore.service;
 
 import org.everyday2point5.fivestore.entity.Goods;
+import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.repository.IGoodsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,9 +25,9 @@ public class DefaultGoodsService implements IGoodsService {
 	}
 
 	@Override
-	public Page<Goods> findAllGoods(int id, int i) {
+	public Page<Goods> findAllGoods(int id, int page) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
-		PageRequest request = new PageRequest(i, 10, sort);
+		PageRequest request = new PageRequest(page, 10, sort);
 		return goodsRepo.findAllGoods(id, request);
 	}
 
@@ -51,6 +52,12 @@ public class DefaultGoodsService implements IGoodsService {
 		Sort sort=new Sort(Direction.DESC,"createDate");
 		PageRequest pageRequest=new PageRequest(page, 10,sort);
 		return goodsRepo.findAll(pageRequest);
+	}
+
+	@Override
+	public User findOneSaler(String goods_id) {
+		// TODO Auto-generated method stub
+		return goodsRepo.findOneSaler(goods_id);
 	}
 
 }

@@ -14,13 +14,15 @@ public interface IOrderService {
 	User findOne(Integer uid);
 
 
-	Page<MyOrder> findAll(int page);
 
 
 	Page<MyOrder> findAllMyDeal(int page);
 
 
 	String findOrderNum(String goods_id);
+
+
+	Page<MyOrder> findAll(int page, int sale_id);
 
 	
 }

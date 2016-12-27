@@ -9,7 +9,10 @@ import javax.persistence.PrePersist;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Component
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class Inbox extends BaseEntity implements Serializable{
 	

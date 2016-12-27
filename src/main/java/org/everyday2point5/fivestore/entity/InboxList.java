@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import org.everyday2point5.fivestore.util.BaseEntity;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Component
 @Entity
 public class InboxList extends BaseEntity implements Serializable{

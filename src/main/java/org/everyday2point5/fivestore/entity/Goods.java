@@ -12,8 +12,9 @@ import javax.persistence.PreUpdate;
 import org.everyday2point5.fivestore.util.BaseEntity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class Goods  extends BaseEntity implements Serializable {
 	/*

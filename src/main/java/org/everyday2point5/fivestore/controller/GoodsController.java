@@ -56,8 +56,13 @@ public class GoodsController {
 		goods.setText(text);
 		goods.setPrice(price);
 		goods.setGoods_count(goods_count);
-		User user = getCurrentUser(request);
-		String  randomNum = String.valueOf(new Random().nextInt(1000000));
+		
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		
+		
+		User user =userService.findById(uid);
+		String  randomNum = String.valueOf(new Random().nextInt(1000));
 		String goods_id = new java.sql.Timestamp(System.currentTimeMillis()).toString()+randomNum;
 		String sale_name = user.getUser_name();
 		
@@ -66,6 +71,7 @@ public class GoodsController {
 		goods.setGoods_id(goods_id);
 		goods.setSale_name(sale_name);
 		goods.setStatus(0); //未購買
+
 		if(user != null){
 			goods.setUser(user);
 		}
@@ -103,19 +109,15 @@ public class GoodsController {
 			@PathVariable int page,
 			HttpServletRequest request
 			){
-		User user = getCurrentUser(request);
-
-		return goodsService.findAllGoods(user.getId(),page);
-
-	}
-
-
-	@RequestMapping(value = "/me", method=RequestMethod.GET)
-	public @ResponseBody User getCurrentUser(HttpServletRequest request){
+		
 		HttpSession session = request.getSession();
 		Integer uid = (Integer) session.getAttribute("uid");
-		return userService.findById(uid);
+		return goodsService.findAllGoods(uid ,page);
+
 	}
+
+
+
 
 
 	@RequestMapping(value="/search", method=RequestMethod.POST)
@@ -201,17 +203,22 @@ public class GoodsController {
 		order.setName(name);
 		order.setAddress(address);
 		order.setPhone(phone);
-		User user = getCurrentUser(request);
+		
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		
+		
+		User user =userService.findById(uid);
 		Integer user_id = user.getId();
 		order.setGoods_id(goods_id);
 		Goods goods = findOne(goods_id);
+		order.setSale_id(goods.getUser().getId());
 		order.setGoods(goods);
 		goods.setStatus(1);//已購買
 		goodsService.save(goods);
 		int randomNum = new Random().nextInt(100);
 		String order_num = user_id+goods_id.substring(2, 10)+randomNum;
-		HttpSession session = request.getSession();
-		Integer uid = (Integer) session.getAttribute("uid");
+	
 		order.setBuyer_id(uid);
 		order.setOrder_num(order_num);
 		order.setStatus(1);//确认付款

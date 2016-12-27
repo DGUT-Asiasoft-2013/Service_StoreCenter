@@ -73,7 +73,9 @@ public class OrderHandler {
 			@PathVariable int page,
 			HttpServletRequest request
 			){
-		return orderService.findAll(page);
+		HttpSession session = request.getSession();
+		Integer sale_id = (Integer) session.getAttribute("uid");
+		return orderService.findAll(page, sale_id);
 	}
 	
 	

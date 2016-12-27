@@ -14,7 +14,8 @@ import org.junit.Ignore;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class Comment  extends BaseEntity  implements Serializable{
 	/*id

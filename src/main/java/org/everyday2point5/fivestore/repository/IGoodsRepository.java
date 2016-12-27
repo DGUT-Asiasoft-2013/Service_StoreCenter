@@ -21,6 +21,9 @@ public interface IGoodsRepository  extends PagingAndSortingRepository<Goods, Int
 	@Query("from Goods g where g.goods_id = ?1")
 	Goods findOneGoods(String goods_id);
 
+	@Query("from Goods g where g.goods_id = ?1")
+	User findOneSaler(String goods_id);
+
 
 
 }
