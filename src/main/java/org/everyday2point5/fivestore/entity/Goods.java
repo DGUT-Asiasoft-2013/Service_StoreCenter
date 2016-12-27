@@ -24,6 +24,7 @@ public class Goods  extends BaseEntity implements Serializable {
 	int goods_count, status;
 
 
+
 	String goods_id;
 	User user;
 	String goods_img;
@@ -34,10 +35,12 @@ public class Goods  extends BaseEntity implements Serializable {
 	Date createDate, editDate;
 	
 
-
+	@Column
 	public String getSale_name() {
 		return sale_name;
 	}
+	
+	@Column
 	public int getStatus() {
 		return status;
 	}
@@ -89,7 +92,6 @@ public class Goods  extends BaseEntity implements Serializable {
 		editDate = new Date();
 	}
 	
-	@JsonIgnore
 	@ManyToOne(optional = false)
 	public User getUser() {
 		return user;
