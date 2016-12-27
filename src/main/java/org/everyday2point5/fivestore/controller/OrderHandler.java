@@ -91,8 +91,10 @@ public class OrderHandler {
 			HttpServletRequest request
 			){
 		
-
-		return orderService.findAllMyDeal(page);
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		
+		return orderService.findAllMyDeal(uid, page);
 	}
 	
 }
