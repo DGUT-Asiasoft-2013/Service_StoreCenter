@@ -105,6 +105,13 @@ public class InboxController {
 
 	}
 	
+	@RequestMapping(value="/inboxGetOne",method=RequestMethod.GET)
+	public InboxList getInboxOne(
+			@PathVariable String sign,
+			HttpServletRequest request){
+		return inboxService.findBySign(sign);
+
+	}
 	
 	@RequestMapping(value="/inboxgetchat", method=RequestMethod.POST)
 	public Page<Inbox> inboxGetChat(
