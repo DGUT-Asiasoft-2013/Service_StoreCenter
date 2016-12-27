@@ -43,6 +43,16 @@ public class APIController {
 	}
 
 	
+	@RequestMapping(value = "/me", method=RequestMethod.GET)
+	public User  getMe(
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		User user =userService.findById(uid);
+		return user;
+	}
+
+	
 		
 	@RequestMapping(value = "/login", method=RequestMethod.POST)
 	public @ResponseBody User login(
@@ -107,5 +117,21 @@ public class APIController {
 		
 	}
 
+	@RequestMapping(value = "/passwordChanges", method=RequestMethod.POST)
+	public @ResponseBody User passwordChanges(
+			@RequestParam String passwordHash,
+			HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		
+		
+		User user =userService.findById(uid);
+		if( user != null && passwordHash!=null){
+			return userService.changePassword(passwordHash);
+		}else{
+			return null;
+		}
+	}
+	
 
 }

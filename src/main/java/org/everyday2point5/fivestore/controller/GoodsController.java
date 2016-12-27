@@ -117,9 +117,6 @@ public class GoodsController {
 	}
 
 
-
-
-
 	@RequestMapping(value="/search", method=RequestMethod.POST)
 	public Page<Goods> searchArticle(
 			@RequestParam  String text
@@ -160,23 +157,6 @@ public class GoodsController {
 	
 	
 	
-//	@RequestMapping(value="goods/{goods_id}/comments/", method=RequestMethod.GET)
-//	public Page<Comment> getFirstComments(
-//			@PathVariable String goods_id
-//			){
-//				return comentsService.getComments(goods_id, 0);
-//		
-//	}
-//	
-//	@RequestMapping(value="goods/{goods_id}/comments/{page}", method=RequestMethod.GET)
-//	public Page<Comment> getComments(
-//			@PathVariable String goods_id,
-//			@PathVariable int page){
-//				return comentsService.getComments(goods_id, page);
-//		
-//	}
-	
-	
 	@RequestMapping(value = "/goods/{goods_id}/deleteGoods", method = RequestMethod.DELETE)
 	public boolean deleteGoods(
 			@PathVariable String goods_id){
@@ -196,6 +176,7 @@ public class GoodsController {
 			@RequestParam String phone,
 			@RequestParam String address,
 			@RequestParam int amount,
+			@RequestParam float price,
 			@PathVariable String goods_id,
 			HttpServletRequest  request
 			){
@@ -223,10 +204,30 @@ public class GoodsController {
 		order.setOrder_num(order_num);
 		order.setStatus(1);//确认付款
 		order.setAmount(amount);
+		
+		goodsAmountChange(amount, goods);
+		moneyChange(price*amount, request);
+		
 		return orderService.save(order);
 		
 	}
 	
+	public User moneyChange(float f,HttpServletRequest  request) {
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		
+		User user =userService.findById(uid);
+		user.setMoney((user.getMoney()-f));
+		return userService.save(user);
+	}
+
+
+	public Goods goodsAmountChange(int amount, Goods goods) {
+		goods.setGoods_count(goods.getGoods_count()-amount);
+		return goodsService.save(goods);
+	}
+
+
 	@RequestMapping(value="goods/{goods_id}", method=RequestMethod.GET)
 	public Goods findOne(
 			@PathVariable String goods_id){
