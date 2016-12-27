@@ -12,8 +12,9 @@ import javax.persistence.PreUpdate;
 import org.everyday2point5.fivestore.util.BaseEntity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class Goods  extends BaseEntity implements Serializable {
 	/*
@@ -21,6 +22,7 @@ public class Goods  extends BaseEntity implements Serializable {
 	 */
 	String title;
 	int goods_count, status;
+
 
 
 	String goods_id;
@@ -33,10 +35,12 @@ public class Goods  extends BaseEntity implements Serializable {
 	Date createDate, editDate;
 	
 
-
+	@Column
 	public String getSale_name() {
 		return sale_name;
 	}
+	
+	@Column
 	public int getStatus() {
 		return status;
 	}
@@ -88,7 +92,6 @@ public class Goods  extends BaseEntity implements Serializable {
 		editDate = new Date();
 	}
 	
-	@JsonIgnore
 	@ManyToOne(optional = false)
 	public User getUser() {
 		return user;

@@ -13,6 +13,8 @@ import javax.persistence.PreUpdate;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class MyOrder  extends BaseEntity implements Serializable{
 	int
@@ -25,7 +27,15 @@ public class MyOrder  extends BaseEntity implements Serializable{
 	Date createDate, editDate;
 	Goods goods;
 	int buyer_id;
-	
+	Integer sale_id;
+	@Column
+	public Integer getSale_id() {
+		return sale_id;
+	}
+
+	public void setSale_id(Integer integer) {
+		this.sale_id = integer;
+	}
 
 	@Column
 	public int getBuyer_id() {

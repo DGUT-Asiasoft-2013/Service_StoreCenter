@@ -12,7 +12,9 @@ import org.hibernate.annotations.Table;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Component
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class User extends BaseEntity implements Serializable {
 

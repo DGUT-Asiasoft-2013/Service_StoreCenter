@@ -22,12 +22,12 @@ public class DefaultOrderService implements IOrderService {
 	public MyOrder save(MyOrder order) {
 		return repo.save(order);
 	}
-/*	@Override
-	public Page<MyOrder> findAll(int page,Integer user_id, String goods_id) {
+	@Override
+	public Page<MyOrder> findAll(int page,int user_id) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		PageRequest request = new PageRequest(page, 10, sort);
-		return repo.findAllOrders(request,user_id, goods_id);
-	}*/
+		return repo.findAllOrders(user_id, request);
+	}
 	@Override
 	public MyOrder findOneOrder(String order_id) {
 		return repo.findOneOrder(order_id);
@@ -37,12 +37,12 @@ public class DefaultOrderService implements IOrderService {
 		// TODO Auto-generated method stub
 		return findOne(uid);
 	}
-	@Override
+/*	@Override
 	public Page<MyOrder> findAll(int page) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		PageRequest request = new PageRequest(page, 10, sort);
 		return  repo.findAllOrders(request);
-	}
+	}*/
 	
 	@Override
 	public Page<MyOrder> findAllMyDeal(int page) {

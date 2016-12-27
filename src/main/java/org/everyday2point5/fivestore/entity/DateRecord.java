@@ -10,6 +10,9 @@ import javax.persistence.PreUpdate;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class DateRecord extends BaseEntity {
 

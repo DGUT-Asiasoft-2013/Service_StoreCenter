@@ -24,7 +24,7 @@ public class DefaultCommentService implements ICommentService{
 	@Override
 	public Page<Comment> findCommentsOfGoods(String goods_id, int page) {
 		Sort sort=new Sort(Direction.DESC,"createDate");
-		PageRequest pageRequest=new PageRequest(page, 10,sort);
+		PageRequest pageRequest=new PageRequest(page,5,sort);
 		return commentRepo.findAllOfGoodsId(goods_id,pageRequest);
 	}
 
