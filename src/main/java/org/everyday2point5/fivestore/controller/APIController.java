@@ -148,5 +148,13 @@ public class APIController {
 		
 		return userService.save(user);
 	}
+	
+	@RequestMapping(value="/passwordRec", method=RequestMethod.POST)
+	public User recoveryPsw(@RequestParam String name){
+		
+		
+		return userService.findUserByName(name);
+		
+	}
 
 }

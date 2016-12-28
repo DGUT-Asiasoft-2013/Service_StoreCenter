@@ -70,6 +70,11 @@ public class DefaultUserService implements IUserService {
 		return userRepo.save(user);
 	}
 
+	@Override
+	public User findUserByName(String name) {
+		return userRepo.findByName(name);
+	}
+
 
 
 
