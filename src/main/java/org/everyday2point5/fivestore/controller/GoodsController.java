@@ -198,7 +198,7 @@ public class GoodsController {
 		goods.setStatus(1);//已購買
 		goodsService.save(goods);
 		int randomNum = new Random().nextInt(100);
-		String order_num = user_id+goods_id.substring(2, 10)+randomNum;
+		String order_num = user_id+goods_id.substring(2, goods_id.length()-1)+randomNum;
 	
 		order.setBuyer_id(uid);
 		order.setOrder_num(order_num);
