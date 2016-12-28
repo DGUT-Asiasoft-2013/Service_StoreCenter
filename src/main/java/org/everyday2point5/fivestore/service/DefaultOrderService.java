@@ -45,10 +45,10 @@ public class DefaultOrderService implements IOrderService {
 	}*/
 	
 	@Override
-	public Page<MyOrder> findAllMyDeal(int page) {
+	public Page<MyOrder> findAllMyDeal(Integer uid, int page) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		PageRequest request = new PageRequest(page, 10, sort);
-		return  repo.findAllDeals(request);
+		return  repo.findAllDeals(uid, request);
 	}
 	@Override
 	public String findOrderNum(String goods_id) {

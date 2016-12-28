@@ -28,6 +28,18 @@ public class MyOrder  extends BaseEntity implements Serializable{
 	Goods goods;
 	int buyer_id;
 	Integer sale_id;
+	float price;
+	
+	@Column
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	
 	@Column
 	public Integer getSale_id() {
 		return sale_id;

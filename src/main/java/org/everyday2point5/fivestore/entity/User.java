@@ -32,7 +32,7 @@ public class User extends BaseEntity implements Serializable {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
-
+	@Column
 	public float getMoney() {
 		return money;
 	}
