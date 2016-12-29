@@ -43,29 +43,29 @@ public class CommentController {
 		return userService.findById(uid);
 	}
 	
-	@RequestMapping(value="/goods/{goods_id}/comments/{page}",method=RequestMethod.GET)
+	@RequestMapping(value="/goods/{id}/comments/{page}",method=RequestMethod.GET)
 	public Page<Comment> getCommentsOfGoods(
-			@PathVariable String goods_id,
+			@PathVariable int id,
 			@PathVariable int page){
-		return commentService.findCommentsOfGoods(goods_id, page);
+		return commentService.findCommentsOfGoods(id, page);
 	}
 	
-	@RequestMapping(value="/goods/{goods_id}/comments",method=RequestMethod.GET)
+	@RequestMapping(value="/goods/{id}/comments",method=RequestMethod.GET)
 	public Page<Comment>getCommentOfGoods(
-			@PathVariable String  goods_id){
-		return commentService.findCommentsOfGoods(goods_id, 0);
+			@PathVariable int id){
+		return commentService.findCommentsOfGoods(id, 0);
 	}
 
-	@RequestMapping(value="/goods/{goods_id}/{order_num}/comments",method=RequestMethod.POST)
+	@RequestMapping(value="/goods/{id}/{order_num}/comments",method=RequestMethod.POST)
 	public Comment postComment(
 			@PathVariable String order_num,
-			@PathVariable String goods_id,
+			@PathVariable int id,
 			@RequestParam String text,
 			HttpServletRequest request){
 		User me=getCurrentUser(request);
 		Comment comment=new Comment();
 		comment.setAuthor(me);
-		comment.setGoods_id(goods_id);
+		comment.getGoods().setId(id);
 		comment.setText(text);
 		comment.setOrder_num(order_num);
 		return commentService.save(comment);

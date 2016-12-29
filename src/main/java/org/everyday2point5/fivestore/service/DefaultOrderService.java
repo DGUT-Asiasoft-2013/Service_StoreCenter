@@ -23,7 +23,7 @@ public class DefaultOrderService implements IOrderService {
 		return repo.save(order);
 	}
 	@Override
-	public Page<MyOrder> findAll(int page,int user_id) {
+	public Page<MyOrder> findAll(int page,Integer user_id) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		PageRequest request = new PageRequest(page, 10, sort);
 		return repo.findAllOrders(user_id, request);
@@ -37,11 +37,12 @@ public class DefaultOrderService implements IOrderService {
 		// TODO Auto-generated method stub
 		return findOne(uid);
 	}
+	
 /*	@Override
-	public Page<MyOrder> findAll(int page) {
+	public Page<MyOrder> findAll( int page, Integer user_id) {
 		Sort sort = new Sort(Direction.DESC, "createDate");
 		PageRequest request = new PageRequest(page, 10, sort);
-		return  repo.findAllOrders(request);
+		return  repo.findAllOrders(user_id,request);
 	}*/
 	
 	@Override

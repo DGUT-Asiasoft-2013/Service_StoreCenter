@@ -10,13 +10,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Transient;
 
 import org.everyday2point5.fivestore.util.BaseEntity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-@JsonIgnoreProperties(ignoreUnknown = true)
+
 @Entity
-public class MyOrder  extends BaseEntity implements Serializable{
+public class MyOrder  extends BaseEntity{
 	/**
 	 * 
 	 */
@@ -24,7 +25,6 @@ public class MyOrder  extends BaseEntity implements Serializable{
 	status,
 	amount;
 	String order_num;
-	String goods_id;
 	
 	String name, phone, address;
 	Date createDate, editDate;
@@ -61,22 +61,13 @@ public class MyOrder  extends BaseEntity implements Serializable{
 		this.buyer_id = buyer_id;
 	}
 
-	@Column
+	@OneToOne
 	public Goods getGoods() {
 		return goods;
 	}
 
 	public void setGoods(Goods goods) {
 		this.goods = goods;
-	}
-
-	@Column
-	public String getGoods_id() {
-		return goods_id;
-	}
-
-	public void setGoods_id(String goods_id2) {
-		this.goods_id = goods_id2;
 	}
 
 	

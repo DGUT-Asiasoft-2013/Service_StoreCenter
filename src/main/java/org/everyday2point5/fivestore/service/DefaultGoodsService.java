@@ -44,8 +44,8 @@ public class DefaultGoodsService implements IGoodsService {
 	}
 
 	@Override
-	public Goods findOne(String goods_id) {
-		return goodsRepo.findOneGoods(goods_id);
+	public Goods findOne(int id) {
+		return goodsRepo.findOne(id);
 	}
 	@Override
 	public Page<Goods> getFeeds(int page) {

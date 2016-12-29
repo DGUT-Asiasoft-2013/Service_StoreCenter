@@ -14,7 +14,7 @@ public interface IGoodsService {
 
 	void delete(Goods goods);
 
-	Goods findOne(String goods_id);
+	Goods findOne(int id);
 	Page<Goods> getFeeds(int page);
 
 	User findOneSaler(String goods_id);

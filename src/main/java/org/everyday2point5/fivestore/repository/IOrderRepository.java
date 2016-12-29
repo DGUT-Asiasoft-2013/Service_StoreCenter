@@ -20,7 +20,7 @@ public interface IOrderRepository  extends PagingAndSortingRepository<MyOrder, I
 	@Query("from  MyOrder myorder where myorder.buyer_id = ?1")
 	Page<MyOrder> findAllDeals(Integer uid, Pageable request);
 
-	@Query("select order_num from  MyOrder myorder where myorder.goods_id = ?1")
+	@Query("select order_num from  MyOrder myorder where myorder.goods.goods_id = ?1")
 	String findOrderNum(String goods_id);
 
 	

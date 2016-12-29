@@ -138,16 +138,16 @@ public class GoodsController {
 
 	}
 	
-	@RequestMapping(value="goods/{goods_id}/changeGoods", method=RequestMethod.POST)
+	@RequestMapping(value="goods/{id}/changeGoods", method=RequestMethod.POST)
 	public Goods change(
 			@RequestParam String title,
 			@RequestParam String text,
 			@RequestParam float price,
 			@RequestParam Integer goods_count,
-			@PathVariable String goods_id
+			@PathVariable int id
 			){
 		
-		Goods goods = goodsService.findOne(goods_id);
+		Goods goods = goodsService.findOne(id);
 		goods.setTitle(title);
 		goods.setText(text);
 		goods.setPrice(price);
@@ -158,10 +158,10 @@ public class GoodsController {
 	
 	
 	
-	@RequestMapping(value = "/goods/{goods_id}/deleteGoods", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/goods/{id}/deleteGoods", method = RequestMethod.DELETE)
 	public boolean deleteGoods(
-			@PathVariable String goods_id){
-		Goods goods = goodsService.findOne(goods_id);
+			@PathVariable int id){
+		Goods goods = goodsService.findOne(id);
 		if(goods!=null){
 			goodsService.delete(goods);
 			return true;
@@ -171,7 +171,7 @@ public class GoodsController {
 		
 	}
 	
-	@RequestMapping(value="/buy/{goods_id}", method=RequestMethod.POST)
+	@RequestMapping(value="/buy/{goods_id}/{id}", method=RequestMethod.POST)
 	public MyOrder buy(
 			@RequestParam String name,
 			@RequestParam String phone,
@@ -179,6 +179,7 @@ public class GoodsController {
 			@RequestParam int amount,
 			@RequestParam float price,
 			@PathVariable String goods_id,
+			@PathVariable int id,
 			HttpServletRequest  request
 			){
 		MyOrder order = new MyOrder();
@@ -191,11 +192,13 @@ public class GoodsController {
 		
 		
 		User user =userService.findById(uid);
+		Goods goods = findOne(id);
 		Integer user_id = user.getId();
-		order.setGoods_id(goods_id);
-		Goods goods = findOne(goods_id);
-		order.setSale_id(goods.getUser().getId());
 		order.setGoods(goods);
+		order.getGoods().setId(id);
+		
+		order.setSale_id(goods.getUser().getId());
+		
 		goods.setStatus(1);//已購買
 		goodsService.save(goods);
 		
@@ -230,12 +233,13 @@ public class GoodsController {
 	}
 
 
-	@RequestMapping(value="goods/{goods_id}", method=RequestMethod.GET)
+	@RequestMapping(value="goods/{id}", method=RequestMethod.GET)
 	public Goods findOne(
-			@PathVariable String goods_id){
-		return goodsService.findOne(goods_id);
+			@PathVariable int id){
+		return goodsService.findOne(id);
 	}
 	
+
 	@RequestMapping(value="goods/sort/{sortType}", method=RequestMethod.GET)
 	public Page<Goods>  sort(
 			@PathVariable String sortType

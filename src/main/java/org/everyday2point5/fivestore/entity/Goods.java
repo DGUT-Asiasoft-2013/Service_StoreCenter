@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import org.everyday2point5.fivestore.util.BaseEntity;
@@ -14,12 +15,13 @@ import org.everyday2point5.fivestore.util.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
+
 @Entity
-public class Goods  extends BaseEntity implements Serializable {
+public class Goods  extends BaseEntity{
 	/*
 	 * 商品名称， 商品编号 图片
 	 */
+
 	String title;
 	int goods_count, status;
 

@@ -22,7 +22,10 @@ public interface IOrderService {
 	String findOrderNum(String goods_id);
 
 
-	Page<MyOrder> findAll(int page, int sale_id);
+	Page<MyOrder> findAll(int page, Integer sale_id);
+
+
+
 
 	
 }
