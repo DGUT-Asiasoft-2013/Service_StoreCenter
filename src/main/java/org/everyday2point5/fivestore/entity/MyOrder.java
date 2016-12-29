@@ -17,6 +17,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity
 public class MyOrder  extends BaseEntity implements Serializable{
+	/**
+	 * 
+	 */
 	int
 	status,
 	amount;

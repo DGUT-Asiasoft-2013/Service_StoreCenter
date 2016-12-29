@@ -19,4 +19,6 @@ public interface IGoodsService {
 
 	User findOneSaler(String goods_id);
 
+	Page<Goods>  sortList(String sortType, int page);
+
 }

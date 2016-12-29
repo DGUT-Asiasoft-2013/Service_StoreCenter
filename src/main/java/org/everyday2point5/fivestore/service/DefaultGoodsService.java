@@ -60,4 +60,12 @@ public class DefaultGoodsService implements IGoodsService {
 		return goodsRepo.findOneSaler(goods_id);
 	}
 
+	@Override
+	public Page<Goods>  sortList(String sortType, int page) {
+		//分類查找
+		Sort sort = new Sort(Direction.DESC, "createDate");
+		PageRequest request = new PageRequest(page, 10, sort);
+		return goodsRepo.findSortList(sortType, request);
+	}
+
 }

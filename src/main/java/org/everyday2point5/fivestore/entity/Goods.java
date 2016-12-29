@@ -34,6 +34,16 @@ public class Goods  extends BaseEntity implements Serializable {
 	
 	Date createDate, editDate;
 	
+	String sort; //类别
+	
+	@Column
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 
 	@Column
 	public String getSale_name() {

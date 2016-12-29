@@ -48,6 +48,7 @@ public class GoodsController {
 			@RequestParam String text,
 			@RequestParam Integer goods_count,
 			@RequestParam float price,
+			@RequestParam String sort,
 			MultipartFile goods_img,
 			HttpServletRequest request
 			){
@@ -71,7 +72,7 @@ public class GoodsController {
 		goods.setGoods_id(goods_id);
 		goods.setSale_name(sale_name);
 		goods.setStatus(0); //未購買
-
+		goods.setSort(sort);
 		if(user != null){
 			goods.setUser(user);
 		}
@@ -233,6 +234,20 @@ public class GoodsController {
 	public Goods findOne(
 			@PathVariable String goods_id){
 		return goodsService.findOne(goods_id);
+	}
+	
+	@RequestMapping(value="goods/sort/{sortType}", method=RequestMethod.GET)
+	public Page<Goods>  sort(
+			@PathVariable String sortType
+		){
+		return sort(sortType, 0);
+	}
+	
+	@RequestMapping(value="goods/sort/{sortType}/{page}", method=RequestMethod.GET)
+	public Page<Goods> sort(
+			@PathVariable String sortType,
+			@PathVariable int page ){
+		return goodsService.sortList(sortType, page);
 	}
 	
 
