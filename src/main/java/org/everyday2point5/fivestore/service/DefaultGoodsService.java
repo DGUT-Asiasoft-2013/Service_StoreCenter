@@ -55,9 +55,9 @@ public class DefaultGoodsService implements IGoodsService {
 	}
 
 	@Override
-	public User findOneSaler(String goods_id) {
+	public User findOneSaler(Integer id) {
 		// TODO Auto-generated method stub
-		return goodsRepo.findOneSaler(goods_id);
+		return goodsRepo.findOneSaler(id);
 	}
 
 	@Override

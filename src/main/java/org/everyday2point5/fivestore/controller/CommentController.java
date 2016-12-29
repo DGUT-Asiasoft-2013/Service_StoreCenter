@@ -56,16 +56,15 @@ public class CommentController {
 		return commentService.findCommentsOfGoods(id, 0);
 	}
 
-	@RequestMapping(value="/goods/{id}/{order_num}/comments",method=RequestMethod.POST)
+	@RequestMapping(value="/goods/{order_num}/comments",method=RequestMethod.POST)
 	public Comment postComment(
 			@PathVariable String order_num,
-			@PathVariable int id,
 			@RequestParam String text,
 			HttpServletRequest request){
 		User me=getCurrentUser(request);
 		Comment comment=new Comment();
 		comment.setAuthor(me);
-		comment.getGoods().setId(id);
+		//comment.getGoods().setId(id);
 		comment.setText(text);
 		comment.setOrder_num(order_num);
 		return commentService.save(comment);

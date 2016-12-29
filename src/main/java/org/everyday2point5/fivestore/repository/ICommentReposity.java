@@ -13,7 +13,7 @@ public interface ICommentReposity extends PagingAndSortingRepository<Comment, In
 	@Query("from Comment comment where comment.goods.id= ?1")
 	Page<Comment> findAllOfGoodsId(int Id,Pageable page);
 
-	@Query("select count(*) from Comment comment where comment.goods.goods_id = ?1")
-	 	int commentCountOfArticle(int goodsId);
+	@Query("select count(*) from Comment comment where comment.goods.id = ?1")
+	 	int commentCountOfArticle(int Id);
 
 }

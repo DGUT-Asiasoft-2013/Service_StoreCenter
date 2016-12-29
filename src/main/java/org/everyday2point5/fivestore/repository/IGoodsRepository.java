@@ -18,11 +18,11 @@ public interface IGoodsRepository  extends PagingAndSortingRepository<Goods, Int
 	@Query("from Goods g where g.title like %?1%")
 	Page<Goods> search(String text, Pageable request);
 	
-	@Query("from Goods g where g.goods_id = ?1")
-	Goods findOneGoods(String goods_id);
+	@Query("from Goods g where g.id = ?1")
+	Goods findOneGoods(Integer id);
 
-	@Query("from Goods g where g.goods_id = ?1")
-	User findOneSaler(String goods_id);
+	@Query("from Goods g where g.id = ?1")
+	User findOneSaler(Integer id);
 
 	@Query("from Goods g where g.sort = ?1")
 	Page<Goods> findSortList(String sortType, Pageable request);

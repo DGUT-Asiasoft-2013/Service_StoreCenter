@@ -17,7 +17,7 @@ public interface IGoodsService {
 	Goods findOne(int id);
 	Page<Goods> getFeeds(int page);
 
-	User findOneSaler(String goods_id);
+	User findOneSaler(Integer id);
 
 	Page<Goods>  sortList(String sortType, int page);
 
