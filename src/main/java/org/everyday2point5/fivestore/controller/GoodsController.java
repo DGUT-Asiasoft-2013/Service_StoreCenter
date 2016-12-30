@@ -187,12 +187,12 @@ public class GoodsController {
 		order.setAddress(address);
 		order.setPhone(phone);
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
 		
 		
 		User user =userService.findById(uid);
-		Goods goods = findOne(id);
+		Goods goods =  goodsService.findOne(id);
 		Integer user_id = user.getId();
 		order.setGoods(goods);
 		order.getGoods().setId(id);
