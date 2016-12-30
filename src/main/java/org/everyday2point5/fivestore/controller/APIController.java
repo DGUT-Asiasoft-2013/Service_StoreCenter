@@ -47,9 +47,9 @@ public class APIController {
 
 	@RequestMapping(value = "/me", method = RequestMethod.GET)
 	public User getMe(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
-		User user = userService.findById(uid);
+		User user = userService.findOne(uid);
 		return user;
 	}
 
@@ -92,7 +92,7 @@ public class APIController {
 		user.setPassword(passwordHash);
 
 		if (avatar != null) {
-			String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
+			String realpath = request.getSession(true).getServletContext().getRealPath("/WEB-INF/upload");
 			try {
 				FileUtils.copyInputStreamToFile(avatar.getInputStream(), new File(realpath, account + ".png"));
 				user.setAvatar("upload/" + account + ".png");
@@ -107,10 +107,10 @@ public class APIController {
 
 	@RequestMapping(value = "/passwordChanges", method = RequestMethod.POST)
 	public @ResponseBody User passwordChanges(@RequestParam String passwordHash, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
 
-		User user = userService.findById(uid);
+		User user = userService.findOne(uid);
 		if (user != null && passwordHash != null) {
 			user.setPassword(passwordHash);
 			return userService.changePassword(user);
@@ -121,10 +121,10 @@ public class APIController {
 
 	@RequestMapping(value = "/money/recharge", method = RequestMethod.POST)
 	public User recharge(@RequestParam float money, HttpServletRequest request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
 
-		User user = userService.findById(uid);
+		User user = userService.findOne(uid);
 		user.setMoney(money);
 		return userService.save(user);
 	}

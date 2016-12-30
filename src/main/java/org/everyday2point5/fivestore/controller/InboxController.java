@@ -49,11 +49,11 @@ public class InboxController {
 		inbox.setCreateDate(curDate);
 
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
 		
 		
-		User user =userService.findById(uid);
+		User user =userService.findOne(uid);
 		if(user!=null){
 			inbox.setRec_user(getUser(user.getUser_name()));
 		}else{
@@ -97,9 +97,9 @@ public class InboxController {
 			@PathVariable int page,
 			HttpServletRequest request
 			){
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
-		User user =userService.findById(uid);
+		User user =userService.findOne(uid);
 		
 		return inboxService.findInboxList(user.getUser_name(),page);
 
@@ -130,11 +130,11 @@ public class InboxController {
 			HttpServletRequest request
 			){
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
 		
 		
-		User user =userService.findById(uid);
+		User user =userService.findOne(uid);
 		String sign;
 		if(user.getUser_name().compareTo(name)>0)
 			sign=name+"-"+user.getUser_name();

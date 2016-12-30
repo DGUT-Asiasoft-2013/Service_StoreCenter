@@ -55,7 +55,7 @@ public class OrderHandler {
 	
 	public User moneyChange(float f,int uid) {
 		
-		User user =userService.findById(uid);
+		User user =userService.findOne(uid);
 		user.setMoney((user.getMoney()+f));
 		return userService.save(user);
 	}
@@ -83,7 +83,7 @@ public class OrderHandler {
 			@PathVariable int page,
 			HttpServletRequest request
 			){
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer sale_id = (Integer) session.getAttribute("uid");
 		return orderService.findAll(page, sale_id);
 	}
@@ -101,7 +101,7 @@ public class OrderHandler {
 			HttpServletRequest request
 			){
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
 		
 		return orderService.findAllMyDeal(uid, page);

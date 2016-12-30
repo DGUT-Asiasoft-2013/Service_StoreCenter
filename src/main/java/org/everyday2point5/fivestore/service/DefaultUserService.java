@@ -48,8 +48,8 @@ public class DefaultUserService implements IUserService {
 	}
 
 	@Override
-	public User findById(Integer uid) {
-		return userRepo.findById(uid);
+	public User findOne(Integer uid) {
+		return userRepo.findOne(uid);
 	}
 
 	@Override

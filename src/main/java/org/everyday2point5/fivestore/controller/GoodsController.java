@@ -62,7 +62,7 @@ public class GoodsController {
 		Integer uid = (Integer) session.getAttribute("uid");
 		
 		
-		User user =userService.findById(uid);
+		User user =userService.findOne(uid);
 		String  randomNum = String.valueOf(new Random().nextInt(1000));
 		String goods_id = new java.sql.Timestamp(System.currentTimeMillis()).toString()+randomNum;
 		String sale_name = user.getUser_name();
@@ -192,11 +192,16 @@ public class GoodsController {
 		Integer uid = (Integer) session.getAttribute("uid");
 		
 		
-		User user =userService.findById(uid);
+		User user =userService.findOne(uid);
 		Goods goods =  goodsService.findOne(id);
 		Integer user_id = user.getId();
-		order.setGoods(goods);
-		order.getGoods().setId(id);
+		if (goods != null){
+			order.setGoods(goods);
+			order.getGoods().setId(id);
+		}else{
+			System.out.println("goods is null!");
+		}
+	
 		
 		order.setSale_id(goods.getUser().getId());
 		
@@ -219,10 +224,10 @@ public class GoodsController {
 	}
 	
 	public User moneyChange(float f,HttpServletRequest  request) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
 		
-		User user =userService.findById(uid);
+		User user =userService.findOne(uid);
 		user.setMoney((user.getMoney()-f));
 		return userService.save(user);
 	}

@@ -40,7 +40,7 @@ public class CommentController {
 	public User getCurrentUser(HttpServletRequest request){
 		HttpSession session=request.getSession(true);
 		Integer uid=(Integer) session.getAttribute("uid");
-		return userService.findById(uid);
+		return userService.findOne(uid);
 	}
 	
 	@RequestMapping(value="/goods/{id}/comments/{page}",method=RequestMethod.GET)
