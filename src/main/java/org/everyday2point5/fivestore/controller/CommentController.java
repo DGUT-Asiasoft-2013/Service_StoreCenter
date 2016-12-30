@@ -60,11 +60,12 @@ public class CommentController {
 	public Comment postComment(
 			@PathVariable String order_num,
 			@RequestParam String text,
+			@RequestParam int id,
 			HttpServletRequest request){
 		User me=getCurrentUser(request);
 		Comment comment=new Comment();
 		comment.setAuthor(me);
-		//comment.getGoods().setId(id);
+		comment.getGoods().setId(id);
 		comment.setText(text);
 		comment.setOrder_num(order_num);
 		return commentService.save(comment);
