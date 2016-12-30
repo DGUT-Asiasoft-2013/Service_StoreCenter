@@ -42,13 +42,23 @@ public class OrderHandler {
 	
 	@RequestMapping(value="/confirmGoods" ,method=RequestMethod.POST)
 	public MyOrder confirmGoods(
-			@RequestParam String order_id){
+			@RequestParam String order_id,
+			@RequestParam int sale_id,
+			@RequestParam int amount,
+			@RequestParam Float price){
 			MyOrder order = orderService.findOneOrder(order_id);
 			order.setStatus(0);
+			moneyChange(price*amount,sale_id);
 			return orderService.save(order);
 		
 	}
 	
+	public User moneyChange(float f,int uid) {
+		
+		User user =userService.findById(uid);
+		user.setMoney((user.getMoney()+f));
+		return userService.save(user);
+	}
 	
 	
 	
