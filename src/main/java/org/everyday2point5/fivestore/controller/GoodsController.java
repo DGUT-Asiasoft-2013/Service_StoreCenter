@@ -111,9 +111,10 @@ public class GoodsController {
 			HttpServletRequest request
 			){
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
-		return goodsService.findAllGoods(uid ,page);
+		Page<Goods> g = goodsService.findAllGoods(uid ,page);
+		return g;
 
 	}
 
