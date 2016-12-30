@@ -56,6 +56,13 @@ public class DefaultOrderService implements IOrderService {
 		// TODO Auto-generated method stub
 		return repo.findOrderNum(id);
 	}
+	@Override
+	public Page<MyOrder> findStatusOrder(int status, Integer sale_id, int page) {
+		// TODO Auto-generated method stub
+		Sort sort = new Sort(Direction.DESC, "createDate");
+		PageRequest request = new PageRequest(page, 10, sort);
+		return  repo.findStatusOrder(status, sale_id,request);
+	}
 
 
 	

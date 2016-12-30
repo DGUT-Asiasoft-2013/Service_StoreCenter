@@ -106,6 +106,25 @@ public class OrderHandler {
 		
 		return orderService.findAllMyDeal(uid, page);
 	}
+
+	@RequestMapping(value="/order/status/{status}",method=RequestMethod.GET)
+	public Page<MyOrder> getStatusOrder(
+			@PathVariable int status,
+			HttpServletRequest request
+			){
+		return getStatusOrder(status,  0,request);
+	}
 	
+	@RequestMapping(value="/order/status/{status}/{page}",method=RequestMethod.GET)
+	public Page<MyOrder> getStatusOrder(
+			@PathVariable int status,
+			@PathVariable int page,
+			HttpServletRequest request
+			){
+		HttpSession session = request.getSession(true);
+		Integer sale_id = (Integer) session.getAttribute("uid");
+		Page<MyOrder> o =orderService.findStatusOrder(status, sale_id, page);
+		return o;
+	}
 }
 

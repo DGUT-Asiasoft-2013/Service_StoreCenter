@@ -22,6 +22,9 @@ public interface IOrderService {
 	Page<MyOrder> findAll(int page, Integer sale_id);
 
 
+	Page<MyOrder> findStatusOrder(int status, Integer sale_id, int page);
+
+
 
 
 	
