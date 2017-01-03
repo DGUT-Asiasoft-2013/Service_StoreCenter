@@ -14,4 +14,7 @@ public interface IGoodsListRepository extends PagingAndSortingRepository<GoodsLi
 	@Query("from GoodsList goodsList where goodsList.seller_name = ?1")
 	Page<GoodsList> findSellerGoodsList(String user_name, Pageable request);
 
+	@Query("from GoodsList goodsList where goodsList.id = ?1")
+	GoodsList findGoodsListById(int id);
+
 }

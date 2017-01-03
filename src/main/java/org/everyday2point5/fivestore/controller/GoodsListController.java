@@ -3,15 +3,19 @@ package org.everyday2point5.fivestore.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.GoodsList;
+import org.everyday2point5.fivestore.entity.GoodsListWithItem;
 import org.everyday2point5.fivestore.entity.InboxList;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.service.IGoodsListService;
+import org.everyday2point5.fivestore.service.IGoodsService;
 import org.everyday2point5.fivestore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,7 +34,7 @@ public class GoodsListController {
 	@Autowired
 	IGoodsListService goodsListService;
 
-
+	
 	@RequestMapping(value="/addGoodsList",method=RequestMethod.POST)
 	public GoodsList addGoodsList(
 			@RequestParam  String name,
@@ -38,7 +42,6 @@ public class GoodsListController {
 			@RequestParam String item,
 			MultipartFile goods_list_image,
 			HttpServletRequest request){
-		System.out.println(name+"+"+text+"+"+item+"+");
 		GoodsList goodsList=new GoodsList();
 		goodsList.setGoods_list_name(name);
 		goodsList.setGoods_list_text(text);
@@ -79,6 +82,42 @@ public class GoodsListController {
 		User user =userService.findOne(uid);
 		
 		return goodsListService.findSellerGoodsList(user.getUser_name(),page);
+
+	}
+	
+	@RequestMapping(value="/GoodsList/{id}",method=RequestMethod.GET)
+	public GoodsListWithItem GoodsListItem( 
+			@PathVariable int id,
+			HttpServletRequest request){
+		return getGoodsListItem(id,0, request);
+
+	}
+	
+	@RequestMapping(value="/GoodsList/{id}/{page}",method=RequestMethod.GET)
+	public GoodsListWithItem getGoodsListItem( 
+			@PathVariable int id,
+			@PathVariable int page,
+			HttpServletRequest request){
+		GoodsListWithItem goodsListWithItem = new GoodsListWithItem();
+		GoodsList goodsList;
+		goodsList=goodsListService.findGoodsListById(id);
+		goodsListWithItem.setCreateTime(goodsList.getCreateTime());
+		goodsListWithItem.setGoods_list_image(goodsList.getGoods_list_image());
+		goodsListWithItem.setGoods_list_name(goodsList.getGoods_list_name());
+		goodsListWithItem.setGoods_list_text(goodsList.getGoods_list_text());
+		goodsListWithItem.setId(id);
+		goodsListWithItem.setSeller_id(goodsList.getSeller_id());
+		goodsListWithItem.setSeller_name(goodsList.getSeller_name());
+
+		
+		String s[]=goodsList.getGoods_list_item().split("-");
+		int[] ids=new int[s.length];
+		for(int i=0;i<s.length;i++){			
+			ids[i]=Integer.parseInt(s[i]);
+		}
+		List<Goods>goodsItem=goodsListService.findGoodsInList(ids,page);
+		goodsListWithItem.setGoods_list_item(goodsItem);
+		return goodsListWithItem;
 
 	}
 }
