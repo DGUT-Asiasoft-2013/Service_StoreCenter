@@ -14,13 +14,30 @@ public class GoodsList extends BaseEntity{
 	String goods_list_image;
 	String goods_list_item;
 	Date createTime;
+	int seller_id;
+	String seller_name;
+
+	
+	
+	public int getSeller_id() {
+		return seller_id;
+	}
+	public void setSeller_id(int seller_id) {
+		this.seller_id = seller_id;
+	}
+	public String getSeller_name() {
+		return seller_name;
+	}
+	public void setSeller_name(String seller_name) {
+		this.seller_name = seller_name;
+	}
 	public Date getCreateTime() {
 		return createTime;
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	User user;
+	
 	public String getGoods_list_name() {
 		return goods_list_name;
 	}
@@ -45,10 +62,6 @@ public class GoodsList extends BaseEntity{
 	public void setGoods_list_item(String goods_list_item) {
 		this.goods_list_item = goods_list_item;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+
+	
 }

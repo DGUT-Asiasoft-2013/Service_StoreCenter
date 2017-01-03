@@ -9,10 +9,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.everyday2point5.fivestore.entity.GoodsList;
+import org.everyday2point5.fivestore.entity.InboxList;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.service.IGoodsListService;
 import org.everyday2point5.fivestore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +48,8 @@ public class GoodsListController {
 		Integer uid = (Integer) session.getAttribute("uid");
 		User user =userService.findOne(uid);
 		
-		goodsList.setUser(user);
+		goodsList.setSeller_id(user.getId());
+		goodsList.setSeller_name(user.getUser_name());
 
 		if (goods_list_image != null) {
 			String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
@@ -59,5 +63,22 @@ public class GoodsListController {
 		}
 		return goodsListService.save(goodsList);
 	}
+	
+	@RequestMapping(value="/sellerGoodsList",method=RequestMethod.GET)
+	public Page<GoodsList> GoodsList( HttpServletRequest request){
+		return getSellerGoodsList(0, request);
+
+	}
+	@RequestMapping(value="/sellerGoodsList/{page}",method=RequestMethod.GET)
+	public Page<GoodsList> getSellerGoodsList(
+			@PathVariable int page,
+			HttpServletRequest request
+			){
+		HttpSession session = request.getSession(true);
+		Integer uid = (Integer) session.getAttribute("uid");
+		User user =userService.findOne(uid);
 		
+		return goodsListService.findSellerGoodsList(user.getUser_name(),page);
+
+	}
 }
