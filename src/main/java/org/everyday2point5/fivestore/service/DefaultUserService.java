@@ -1,6 +1,7 @@
 package org.everyday2point5.fivestore.service;
 
 
+import org.everyday2point5.fivestore.entity.Access_User;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,8 @@ public class DefaultUserService implements IUserService {
 	public User findUserByName(String name) {
 		return userRepo.findByName(name);
 	}
+
+
 
 
 
