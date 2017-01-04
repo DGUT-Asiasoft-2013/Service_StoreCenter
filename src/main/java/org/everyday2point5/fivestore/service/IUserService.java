@@ -2,13 +2,18 @@ package org.everyday2point5.fivestore.service;
 
 import org.everyday2point5.fivestore.entity.User;
 
-
-
 public interface IUserService {
-	User create(String account, String passwordHash);
 	
+	User create(String account, String passwordHash);
+
 	void login(String account, String passwordHash);
+
 	User changePassword(User user);
+	
+	User changeName(User user);
+	
+	User changeEmail(User user);
+
 	void logout();
 	User save(User user);
 	User findByAccount(String account);
@@ -20,8 +25,5 @@ public interface IUserService {
 	User findByName(String name);
 
 	User findUserByName(String name);
-	
-	
 
-	
 }
