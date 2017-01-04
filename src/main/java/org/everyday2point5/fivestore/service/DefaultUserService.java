@@ -75,6 +75,18 @@ public class DefaultUserService implements IUserService {
 		return userRepo.findByName(name);
 	}
 
+	@Override
+	public User changeName(User user) {
+		
+		return userRepo.save(user);
+	}
+
+	@Override
+	public User changeEmail(User user) {
+		
+		return userRepo.save(user);
+	}
+
 
 
 

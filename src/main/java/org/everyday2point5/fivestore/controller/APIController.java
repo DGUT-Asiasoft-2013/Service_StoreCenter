@@ -3,6 +3,8 @@ package org.everyday2point5.fivestore.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -105,6 +107,28 @@ public class APIController {
 
 	}
 
+	@RequestMapping(value = "/change_avatar", method = RequestMethod.POST)
+	public @ResponseBody User changeAvatar(@RequestParam String uid,
+			MultipartFile avatar,
+			HttpServletRequest request) {
+		
+		User user = userService.findOne(Integer.valueOf(uid));		
+		Date date=new Date();
+		String account="s"+date.getTime();
+		if (avatar != null) {
+			String realpath = request.getSession(true).getServletContext().getRealPath("/WEB-INF/upload");
+			try {
+				FileUtils.copyInputStreamToFile(avatar.getInputStream(), new File(realpath, account + ".png"));
+				
+				user.setAvatar("upload/" + account + ".png");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return userService.save(user);
+	}
+
 	@RequestMapping(value = "/passwordChanges", method = RequestMethod.POST)
 	public @ResponseBody User passwordChanges(@RequestParam String passwordHash, HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
@@ -114,6 +138,34 @@ public class APIController {
 		if (user != null && passwordHash != null) {
 			user.setPassword(passwordHash);
 			return userService.changePassword(user);
+		} else {
+			return null;
+		}
+	}
+
+	@RequestMapping(value = "/nameChanges", method = RequestMethod.POST)
+	public @ResponseBody User nameChanges(@RequestParam String user_name, HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		Integer uid = (Integer) session.getAttribute("uid");
+
+		User user = userService.findOne(uid);
+		if (user != null && user_name != null) {
+			user.setUser_name(user_name);
+			return userService.changeName(user);
+		} else {
+			return null;
+		}
+	}
+
+	@RequestMapping(value = "/emailChanges", method = RequestMethod.POST)
+	public @ResponseBody User emailChanges(@RequestParam String email, HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		Integer uid = (Integer) session.getAttribute("uid");
+
+		User user = userService.findOne(uid);
+		if (user != null && email != null) {
+			user.setEmail(email);
+			return userService.changeEmail(user);
 		} else {
 			return null;
 		}
@@ -136,18 +188,15 @@ public class APIController {
 	}
 
 	@RequestMapping(value = "/confirmRecord", method = RequestMethod.POST)
-	public Record saveRecord(
-			@RequestParam String state, 
-			@RequestParam Float money, 
-			HttpServletRequest request) {
-		
+	public Record saveRecord(@RequestParam String state, @RequestParam Float money, HttpServletRequest request) {
+
 		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
 		Record record = new Record();
 		record.setState(state);
 		record.setMoney(money);
 		record.setBuyer_id(uid);
-		
+
 		return recordService.save(record);
 	}
 
