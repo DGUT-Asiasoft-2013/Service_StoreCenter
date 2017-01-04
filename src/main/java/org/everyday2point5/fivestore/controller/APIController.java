@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.entity.Comment;
 import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.MyOrder;
@@ -54,6 +55,15 @@ public class APIController {
 		User user = userService.findOne(uid);
 		return user;
 	}
+	
+	@RequestMapping(value = "/access_me", method = RequestMethod.GET)
+	public User getAccess_me(HttpServletRequest request) {
+		HttpSession session = request.getSession(true);
+		Integer uid = (Integer) session.getAttribute("uid");
+		User user = userService.findOne(uid);
+		return user;
+	}
+	
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody User login(@RequestParam String account, @RequestParam String passwordHash,
@@ -68,6 +78,25 @@ public class APIController {
 			return null;
 		}
 	}
+	
+	//授权登陆
+	@RequestMapping(value = "/access_login", method = RequestMethod.POST)
+	public @ResponseBody User access_login(
+			@RequestParam String user_name,
+			@RequestParam Integer user_id,
+			HttpServletRequest request) {
+		
+			User user = new User();
+			user.setUser_name(user_name);
+			user.setId(user_id);
+			
+			HttpSession session = request.getSession(true);
+			session.setAttribute("uid", user_id);
+			return userService.save(user);
+	
+	}
+	
+	
 
 	@RequestMapping(value = "/passwordrecover", method = RequestMethod.POST)
 	public boolean resetPassword(@RequestParam String email, @RequestParam String passwordHash) {

@@ -15,9 +15,7 @@ public interface IUserService {
 	User changeEmail(User user);
 
 	void logout();
-
 	User save(User user);
-
 	User findByAccount(String account);
 
 	User findOne(Integer uid);
