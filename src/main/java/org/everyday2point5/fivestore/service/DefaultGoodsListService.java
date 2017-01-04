@@ -33,6 +33,13 @@ public class DefaultGoodsListService implements IGoodsListService{
 	}
 	
 	@Override
+	public Page<GoodsList> findAllGoodsList(int page) {
+		Sort sort = new Sort(Direction.DESC, "createTime");
+		PageRequest request = new PageRequest(page, 10, sort);
+		return goodsListRepo.findAll(request);
+	}
+	
+	@Override
 	public Page<GoodsList> findSellerGoodsList(String user_name, int page) {
 		Sort sort = new Sort(Direction.DESC, "createTime");
 		PageRequest request = new PageRequest(page, 10, sort);
@@ -51,5 +58,7 @@ public class DefaultGoodsListService implements IGoodsListService{
 		PageRequest request = new PageRequest(page, 10, sort);
 		return goodsRepo.findGoodsInList(id, request);
 	}
+
+
 
 }

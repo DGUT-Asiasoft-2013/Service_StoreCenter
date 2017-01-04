@@ -2,7 +2,7 @@ package org.everyday2point5.fivestore.repository;
 
 import org.everyday2point5.fivestore.entity.GoodsList;
 import org.springframework.data.domain.Page;
-
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -16,5 +16,7 @@ public interface IGoodsListRepository extends PagingAndSortingRepository<GoodsLi
 
 	@Query("from GoodsList goodsList where goodsList.id = ?1")
 	GoodsList findGoodsListById(int id);
+
+
 
 }

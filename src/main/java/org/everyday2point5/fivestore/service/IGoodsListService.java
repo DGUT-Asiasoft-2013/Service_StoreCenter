@@ -15,6 +15,8 @@ public interface IGoodsListService {
 	GoodsList findGoodsListById(int id);
 
 	List<Goods> findGoodsInList(int[] id, int page);
+
+	Page<GoodsList> findAllGoodsList(int page);
 	
 	
 }

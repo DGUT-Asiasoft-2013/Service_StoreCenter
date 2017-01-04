@@ -67,8 +67,25 @@ public class GoodsListController {
 		return goodsListService.save(goodsList);
 	}
 	
+	@RequestMapping(value="/allGoodsList",method=RequestMethod.GET)
+	public Page<GoodsList> allGoodsList( HttpServletRequest request){
+		return getallGoodsList(0, request);
+
+	}
+	@RequestMapping(value="/allGoodsList/{page}",method=RequestMethod.GET)
+	public Page<GoodsList> getallGoodsList(
+			@PathVariable int page,
+			HttpServletRequest request
+			){
+
+		
+		return goodsListService.findAllGoodsList(page);
+
+	}
+
+	
 	@RequestMapping(value="/sellerGoodsList",method=RequestMethod.GET)
-	public Page<GoodsList> GoodsList( HttpServletRequest request){
+	public Page<GoodsList> sellerGoodsList( HttpServletRequest request){
 		return getSellerGoodsList(0, request);
 
 	}
