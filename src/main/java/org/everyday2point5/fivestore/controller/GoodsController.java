@@ -102,7 +102,6 @@ public class GoodsController {
 	@RequestMapping(value="/goods",method=RequestMethod.GET)
 	public Page<Goods> getGoods( HttpServletRequest request){
 		return getGoods(0, request);
-
 	}
 
 	@RequestMapping(value="/goods/{page}",method=RequestMethod.GET)
@@ -123,9 +122,6 @@ public class GoodsController {
 	public Page<Goods> searchArticle(
 			@RequestParam  String text
 			){
-
-		
-		
 		return searchArticle(text,0);
 
 	}
