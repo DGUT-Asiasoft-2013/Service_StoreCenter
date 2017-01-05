@@ -40,6 +40,12 @@ public class DefaultCommentService implements ICommentService{
 		return commentRepo.commentCountOfArticle(goodsId);
 	}
 
+	@Override
+	public Comment findOne(int id) {
+		// TODO Auto-generated method stub
+		return commentRepo.findOne(id);
+	}
+
 
 
 

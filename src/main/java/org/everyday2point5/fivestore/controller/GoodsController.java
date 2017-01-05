@@ -40,8 +40,6 @@ public class GoodsController {
 	IGoodsService goodsService;
 
 	@Autowired
-	ICommentService comentsService;
-	@Autowired
 	IUserService userService;
 	@Autowired
 	IOrderService orderService;

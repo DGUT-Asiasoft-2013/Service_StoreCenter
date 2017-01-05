@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
 public interface ICommentService {
-	Page<Comment> findCommentsOfGoods(int goods,int page);
+	Page<Comment> findCommentsOfGoods(int id,int page);
 	Comment save(Comment comment);
 	
 	int getCommentCountOfArticle(int goodsId);
+	Comment findOne(int id);
 
 }
