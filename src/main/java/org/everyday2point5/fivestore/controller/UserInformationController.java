@@ -52,7 +52,7 @@ public class UserInformationController {
 		return userInformationService.save(userInf);
 	}
 	
-	@RequestMapping(value = "/getInformation", method = RequestMethod.GET)
+	@RequestMapping(value = "/getInformation/{user_id}", method = RequestMethod.GET)
 	public UserInformation getInformation(
 			@PathVariable int user_id
 			) {
@@ -61,11 +61,9 @@ public class UserInformationController {
 			userInf=new UserInformation();
 			userInf.setUser_id(user_id);
 			userInf.setSex("male");
-			return userInformationService.save(userInf);
-		}else{
-			return userInf;
+			userInformationService.save(userInf);
 		}
-
+		return userInf;
 
 	}
 }
