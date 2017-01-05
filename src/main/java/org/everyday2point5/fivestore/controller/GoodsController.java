@@ -16,6 +16,7 @@ import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.MyOrder;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.service.ICommentService;
+import org.everyday2point5.fivestore.service.IDownsService;
 import org.everyday2point5.fivestore.service.IGoodsService;
 import org.everyday2point5.fivestore.service.ILikesService;
 import org.everyday2point5.fivestore.service.IOrderService;
@@ -46,6 +47,9 @@ public class GoodsController {
 	IOrderService orderService;
 	@Autowired
 	ILikesService likesService;
+	@Autowired
+	IDownsService downService;
+	
 	@RequestMapping(value="/addGoods", method=RequestMethod.POST)
 	public Goods addGoods(
 			@RequestParam  String title,
@@ -274,7 +278,6 @@ public class GoodsController {
 	@RequestMapping(value="goods/{id}/likes", method = RequestMethod.GET)
 	public int countLikes(
 			@PathVariable  int id,
-			@RequestParam  boolean likes,
 			HttpServletRequest request){
 		User user = getCurrentUser(request);
 		
@@ -291,6 +294,43 @@ public class GoodsController {
 		
 	}
 
+	
+	@RequestMapping(value="goods/{id}/downs", method = RequestMethod.POST)
+	public Integer changeDowns(
+			@PathVariable  int id,
+			@RequestParam  boolean downs,
+			HttpServletRequest request){
+		User user = getCurrentUser(request);
+		
+		Goods goods = goodsService.findOne(id);
+		
+		if(downs){
+			downService.addDown(user, goods);
+		}else{
+			downService.removeDown(user, goods);
+		}
+		return downService.downsCount(id);
+	}
+	
+	@RequestMapping(value="goods/{id}/downs", method = RequestMethod.GET)
+	public int countDowns(
+			@PathVariable  int id,
+			HttpServletRequest request){
+		User user = getCurrentUser(request);
+		
+		return downService.downsCount(id);
+	}
+	
+	@RequestMapping(value="goods/{id}/isDowned", method = RequestMethod.GET)
+	public boolean checkDowns(
+			@PathVariable  int id,
+			HttpServletRequest request){
+			User user= getCurrentUser(request);
+			Goods goods  = goodsService.findOne(id);
+		return downService.checkDownsExit(user.getId(), goods.getId());
+		
+	}
+	
 
 	private User getCurrentUser(HttpServletRequest request) {
 		HttpSession session = request.getSession();
