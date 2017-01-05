@@ -1,3 +1,4 @@
+
 package org.everyday2point5.fivestore.controller;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import org.everyday2point5.fivestore.entity.MyOrder;
 import org.everyday2point5.fivestore.entity.User;
 import org.everyday2point5.fivestore.service.ICommentService;
 import org.everyday2point5.fivestore.service.IGoodsService;
+import org.everyday2point5.fivestore.service.ILikesService;
 import org.everyday2point5.fivestore.service.IOrderService;
 import org.everyday2point5.fivestore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+
 @RestController
 @RequestMapping("/api")
 public class GoodsController {
@@ -41,7 +44,8 @@ public class GoodsController {
 	IUserService userService;
 	@Autowired
 	IOrderService orderService;
-
+	@Autowired
+	ILikesService likesService;
 	@RequestMapping(value="/addGoods", method=RequestMethod.POST)
 	public Goods addGoods(
 			@RequestParam  String title,
@@ -58,11 +62,7 @@ public class GoodsController {
 		goods.setPrice(price);
 		goods.setGoods_count(goods_count);
 		
-		HttpSession session = request.getSession();
-		Integer uid = (Integer) session.getAttribute("uid");
-		
-		
-		User user =userService.findOne(uid);
+		User user = getCurrentUser(request);
 		String  randomNum = String.valueOf(new Random().nextInt(1000));
 		String goods_id = new java.sql.Timestamp(System.currentTimeMillis()).toString()+randomNum;
 		String sale_name = user.getUser_name();
@@ -183,12 +183,8 @@ public class GoodsController {
 		order.setName(name);
 		order.setAddress(address);
 		order.setPhone(phone);
-		
-		HttpSession session = request.getSession(true);
-		Integer uid = (Integer) session.getAttribute("uid");
-		
-		
-		User user =userService.findOne(uid);
+
+		User user =  getCurrentUser(request);
 		Goods goods =  goodsService.findOne(id);
 		Integer user_id = user.getId();
 		if (goods != null){
@@ -207,7 +203,7 @@ public class GoodsController {
 		int randomNum = new Random().nextInt(100);
 		String order_num = user_id+goods_id.substring(2, goods_id.length()-1)+randomNum;
 	
-		order.setBuyer_id(uid);
+		order.setBuyer_id(user_id);
 		order.setOrder_num(order_num);
 		order.setStatus(1);//确认付款
 		order.setAmount(amount);
@@ -256,5 +252,51 @@ public class GoodsController {
 		return goodsService.sortList(sortType, page);
 	}
 	
+	
+	
+	@RequestMapping(value="goods/{id}/likes", method = RequestMethod.POST)
+	public Integer changeLikes(
+			@PathVariable  int id,
+			@RequestParam  boolean likes,
+			HttpServletRequest request){
+		User user = getCurrentUser(request);
+		
+		Goods goods = goodsService.findOne(id);
+		
+		if(likes){
+			likesService.addLike(user, goods);
+		}else{
+			likesService.removeLike(user, goods);
+		}
+		return likesService.likeCount(id);
+	}
+	
+	@RequestMapping(value="goods/{id}/likes", method = RequestMethod.GET)
+	public int countLikes(
+			@PathVariable  int id,
+			@RequestParam  boolean likes,
+			HttpServletRequest request){
+		User user = getCurrentUser(request);
+		
+		return likesService.likeCount(id);
+	}
+	
+	@RequestMapping(value="goods/{id}/isLiked", method = RequestMethod.GET)
+	public boolean checkLikes(
+			@PathVariable  int id,
+			HttpServletRequest request){
+			User user= getCurrentUser(request);
+			Goods goods  = goodsService.findOne(id);
+		return likesService.checkLikesExit(user.getId(), goods.getId());
+		
+	}
+
+
+	private User getCurrentUser(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		User user = userService.findOne(uid);
+		return user;
+	}
 
 }
