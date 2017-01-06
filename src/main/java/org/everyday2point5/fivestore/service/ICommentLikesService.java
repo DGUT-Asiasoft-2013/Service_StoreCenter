@@ -12,4 +12,5 @@ public interface ICommentLikesService {
 
 	boolean checkCommentLikesEixt(Integer id, Integer comment_id);
 
+
 }

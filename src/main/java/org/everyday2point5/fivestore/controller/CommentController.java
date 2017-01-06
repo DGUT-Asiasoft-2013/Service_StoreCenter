@@ -98,6 +98,7 @@ public class CommentController {
 		
 		if(likes){
 			commentlikesSe.addCommentLike(user, comment);
+			commentdownSe.removeCommentDown(user, comment);
 		}else{
 			commentlikesSe.removeCommentLike(user, comment);
 		}
@@ -134,6 +135,7 @@ public class CommentController {
 		
 		if(downs){
 			commentdownSe.addCommentDown(user, comment);
+			commentlikesSe.removeCommentLike(user, comment);
 		}else{
 			commentdownSe.removeCommentDown(user, comment);
 		}
@@ -157,5 +159,23 @@ public class CommentController {
 		return commentdownSe.checkCommentDownsExit(user.getId(), comment.getId());
 		
 	}
+	
+	
+	@RequestMapping(value="comment/{id}/getDownNum", method = RequestMethod.GET)
+	public int getDownNum(
+			@PathVariable  int id){
+		return commentdownSe.commentDownsCount(id);
+		
+	}
+	
+	@RequestMapping(value="comment/{id}/getLikeNum", method = RequestMethod.GET)
+	public int getLikeNum(
+			@PathVariable  int id){
+		return commentlikesSe.commentLikeCount(id);
+		
+	}
+	
+	
+	
 	
 }
