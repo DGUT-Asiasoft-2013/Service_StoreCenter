@@ -14,11 +14,6 @@ public interface IDownsRepository  extends PagingAndSortingRepository<Downs, Dow
 	@Query("select count(*) from Downs downs where downs.id.user.id = ?1 and downs.id.goods.id= ?2")
 	public int checkDownsExit(Integer id, Integer id2);
 
-	@Query("select count(*) from Downs downs where downs.id.comment.id = ?1 ")
-	public Integer commentDownCount(int id);
-	
-	@Query("select count(*) from Downs downs where downs.id.user.id = ?1 and downs.id.comment.id= ?2")
-	public int checkCommentDownsExit(Integer id, Integer id2);
 
 
 }

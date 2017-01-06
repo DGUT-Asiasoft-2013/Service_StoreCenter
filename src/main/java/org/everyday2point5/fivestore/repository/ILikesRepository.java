@@ -19,9 +19,4 @@ public interface ILikesRepository extends PagingAndSortingRepository<Likes, Like
 	@Query("select count(*) from Likes likes where likes.id.user.id = ?1 and likes.id.goods.id= ?2")
 	int checkLikesExit( int user_id,int goods_id);
 
-	@Query("select count(*) from Likes likes where likes.id.comment.id = ?1 ")
-	int comment_likeCount(int id);
-	
-	@Query("select count(*) from Likes likes where likes.id.user.id = ?1 and likes.id.comment.id= ?2")
-	int checkCommentLikesExit( Integer user_id,Integer id);
 }

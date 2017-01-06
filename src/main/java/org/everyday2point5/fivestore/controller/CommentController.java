@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 import org.everyday2point5.fivestore.entity.Comment;
 import org.everyday2point5.fivestore.entity.Goods;
 import org.everyday2point5.fivestore.entity.User;
+import org.everyday2point5.fivestore.service.ICommentDownsService;
+import org.everyday2point5.fivestore.service.ICommentLikesService;
 import org.everyday2point5.fivestore.service.ICommentService;
 import org.everyday2point5.fivestore.service.IDownsService;
 import org.everyday2point5.fivestore.service.IGoodsService;
@@ -43,6 +45,11 @@ public class CommentController {
 	@Autowired
 	IDownsService downService;
 
+	@Autowired
+	ICommentLikesService commentlikesSe;
+	@Autowired
+	ICommentDownsService commentdownSe;
+	
 	public User getCurrentUser(HttpServletRequest request){
 		HttpSession session=request.getSession(true);
 		Integer uid=(Integer) session.getAttribute("uid");
@@ -81,7 +88,7 @@ public class CommentController {
 	
 
 	@RequestMapping(value="comment/{id}/likes", method = RequestMethod.POST)
-	public Integer changeLikes(
+	public Integer changeCommentLikes(
 			@PathVariable  int id,
 			@RequestParam  boolean likes,
 			HttpServletRequest request){
@@ -90,11 +97,11 @@ public class CommentController {
 		Comment comment = commentService.findOne(id);
 		
 		if(likes){
-			likesService.addCommentLike(user, comment);
+			commentlikesSe.addCommentLike(user, comment);
 		}else{
-			likesService.removeCommentLike(user, comment);
+			commentlikesSe.removeCommentLike(user, comment);
 		}
-		return likesService.commentLikeCount(id);
+		return commentlikesSe.commentLikeCount(id);
 	}
 	
 	@RequestMapping(value="comment/{id}/likes", method = RequestMethod.GET)
@@ -102,7 +109,7 @@ public class CommentController {
 			@PathVariable  int id,
 			HttpServletRequest request){
 		
-		return likesService.commentLikeCount(id);
+		return commentlikesSe.commentLikeCount(id);
 	}
 	
 	@RequestMapping(value="comment/{id}/isLiked", method = RequestMethod.GET)
@@ -111,7 +118,7 @@ public class CommentController {
 			HttpServletRequest request){
 			User user= getCurrentUser(request);
 			Comment comment  = commentService.findOne(id);
-		return likesService.checkCommentLikesEixt(user.getId(), comment.getId());
+		return commentlikesSe.checkCommentLikesEixt(user.getId(), comment.getId());
 		
 	}
 
@@ -126,11 +133,11 @@ public class CommentController {
 		Comment comment  = commentService.findOne(id);
 		
 		if(downs){
-			downService.addCommentDown(user, comment);
+			commentdownSe.addCommentDown(user, comment);
 		}else{
-			downService.removeCommentDown(user, comment);
+			commentdownSe.removeCommentDown(user, comment);
 		}
-		return downService.commentDownsCount(id);
+		return commentdownSe.commentDownsCount(id);
 	}
 	
 	@RequestMapping(value="comment/{id}/downs", method = RequestMethod.GET)
@@ -138,7 +145,7 @@ public class CommentController {
 			@PathVariable  int id,
 			HttpServletRequest request){
 		
-		return downService.commentDownsCount(id);
+		return commentdownSe.commentDownsCount(id);
 	}
 	
 	@RequestMapping(value="comment/{id}/isDowned", method = RequestMethod.GET)
@@ -147,7 +154,7 @@ public class CommentController {
 			HttpServletRequest request){
 			User user= getCurrentUser(request);
 			Comment comment  = commentService.findOne(id);
-		return downService.checkCommentDownsExit(user.getId(), comment.getId());
+		return commentdownSe.checkCommentDownsExit(user.getId(), comment.getId());
 		
 	}
 	

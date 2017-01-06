@@ -53,37 +53,5 @@ public class DefaultLikesService implements ILikesService{
 		return  likeRepo.checkLikesExit(user, goods)>0;
 	}
 
-	@Override
-	public void addCommentLike(User user, Comment comment) {
-		Likes.Key l = new Key();
-		 l.setComment(comment);
-		 l.setUser(user);
-		
-		 Likes lk = new Likes();
-		 lk.setId(l);
-		 likeRepo.save(lk);
-	}
-
-	@Override
-	public void removeCommentLike(User user, Comment comment) {
-		Likes.Key key = new Key();
-		
-		key.setUser(user);
-		key.setComment(comment);
-		
-		likeRepo.delete(key);
-	}
-
-	@Override
-	public int commentLikeCount(int id) {
-		// TODO Auto-generated method stub
-		return likeRepo.comment_likeCount(id);
-	}
-
-	@Override
-	public boolean checkCommentLikesEixt(Integer user, Integer comment_id) {
-		// TODO Auto-generated method stub
-		return likeRepo.checkCommentLikesExit(user, comment_id)>0;
-	}
-
+	
 }

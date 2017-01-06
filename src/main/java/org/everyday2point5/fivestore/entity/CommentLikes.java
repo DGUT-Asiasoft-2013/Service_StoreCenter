@@ -1,6 +1,7 @@
 package org.everyday2point5.fivestore.entity;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,12 +12,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 
 @Entity
-public class Downs {
+public class CommentLikes {
 	@Embeddable
 	public static class Key implements Serializable{
 	
 		User user;
-		Goods goods;
+		Comment comment;
 		
 		@ManyToOne(optional = false)
 		public User getUser() {
@@ -25,20 +26,19 @@ public class Downs {
 		public void setUser(User user) {
 			this.user = user;
 		}
+	
 		@ManyToOne(optional = false)
-		public Goods getGoods() {
-			return goods;
+		public Comment getComment() {
+			return comment;
 		}
-		public void setGoods(Goods goods) {
-			this.goods = goods;
+		public void setComment(Comment comment) {
+			this.comment = comment;
 		}
-		
-		 
 		public boolean equals(Object obj){
 			if(obj instanceof Key){
 				Key other = (Key)obj;
 				
-				return goods.getId() == other.goods.getId() && user.getId() == other.user.getId();
+				return comment.getId() == other.comment.getId() && user.getId() == other.user.getId();
 			}
 			else{
 				return false;
@@ -49,7 +49,7 @@ public class Downs {
 		
 		@Override
 		public int hashCode() {
-			return goods.getId();
+			return comment.getId();
 		}
 		
 	}
@@ -82,6 +82,8 @@ public class Downs {
 	}
 	
 	
+	
 }
+
 
 

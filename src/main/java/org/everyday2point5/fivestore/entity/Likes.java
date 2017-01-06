@@ -18,7 +18,6 @@ public class Likes {
 	
 		User user;
 		Goods goods;
-		Comment comment;
 		
 		@ManyToOne(optional = false)
 		public User getUser() {
@@ -35,13 +34,7 @@ public class Likes {
 			this.goods = goods;
 		}
 		
-		@ManyToOne(optional = false)
-		public Comment getComment() {
-			return comment;
-		}
-		public void setComment(Comment comment) {
-			this.comment = comment;
-		}
+		
 		public boolean equals(Object obj){
 			if(obj instanceof Key){
 				Key other = (Key)obj;
