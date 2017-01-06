@@ -34,23 +34,18 @@ public class GoodsListController {
 	@Autowired
 	IGoodsListService goodsListService;
 
-	
-	@RequestMapping(value="/addGoodsList",method=RequestMethod.POST)
-	public GoodsList addGoodsList(
-			@RequestParam  String name,
-			@RequestParam 	String text,
-			@RequestParam String item,
-			MultipartFile goods_list_image,
-			HttpServletRequest request){
-		GoodsList goodsList=new GoodsList();
+	@RequestMapping(value = "/addGoodsList", method = RequestMethod.POST)
+	public GoodsList addGoodsList(@RequestParam String name, @RequestParam String text, @RequestParam String item,
+			MultipartFile goods_list_image, HttpServletRequest request) {
+		GoodsList goodsList = new GoodsList();
 		goodsList.setGoods_list_name(name);
 		goodsList.setGoods_list_text(text);
 		goodsList.setGoods_list_item(item);
 		goodsList.setCreateTime(new Date());
 		HttpSession session = request.getSession();
 		Integer uid = (Integer) session.getAttribute("uid");
-		User user =userService.findOne(uid);
-		
+		User user = userService.findOne(uid);
+
 		goodsList.setSeller_id(user.getId());
 		goodsList.setSeller_name(user.getUser_name());
 
@@ -66,58 +61,62 @@ public class GoodsListController {
 		}
 		return goodsListService.save(goodsList);
 	}
-	
-	@RequestMapping(value="/allGoodsList",method=RequestMethod.GET)
-	public Page<GoodsList> allGoodsList( HttpServletRequest request){
+
+	@RequestMapping(value = "/allGoodsList", method = RequestMethod.GET)
+	public Page<GoodsList> allGoodsList(HttpServletRequest request) {
 		return getallGoodsList(0, request);
 
 	}
-	@RequestMapping(value="/allGoodsList/{page}",method=RequestMethod.GET)
-	public Page<GoodsList> getallGoodsList(
-			@PathVariable int page,
-			HttpServletRequest request
-			){
 
-		
+	@RequestMapping(value = "/allGoodsList/{page}", method = RequestMethod.GET)
+	public Page<GoodsList> getallGoodsList(@PathVariable int page, HttpServletRequest request) {
+
 		return goodsListService.findAllGoodsList(page);
 
 	}
 
-	
-	@RequestMapping(value="/sellerGoodsList",method=RequestMethod.GET)
-	public Page<GoodsList> sellerGoodsList( HttpServletRequest request){
+	@RequestMapping(value = "/findSellerGoodsList/{id}", method = RequestMethod.GET)
+	public Page<GoodsList> findSellerGoodsList(@PathVariable int id, HttpServletRequest request) {
+		return getFindSellerGoodsList(0, id, request);
+
+	}
+
+	@RequestMapping(value = "/findSellerGoodsList/{id}/{page}", method = RequestMethod.GET)
+	public Page<GoodsList> getFindSellerGoodsList(@PathVariable int page, @PathVariable int id,
+			HttpServletRequest request) {
+		User user = userService.findOne(id);
+		return goodsListService.findSellerGoodsList(user.getUser_name(), page);
+
+	}
+
+	@RequestMapping(value = "/sellerGoodsList", method = RequestMethod.GET)
+	public Page<GoodsList> sellerGoodsList(HttpServletRequest request) {
 		return getSellerGoodsList(0, request);
 
 	}
-	@RequestMapping(value="/sellerGoodsList/{page}",method=RequestMethod.GET)
-	public Page<GoodsList> getSellerGoodsList(
-			@PathVariable int page,
-			HttpServletRequest request
-			){
+
+	@RequestMapping(value = "/sellerGoodsList/{page}", method = RequestMethod.GET)
+	public Page<GoodsList> getSellerGoodsList(@PathVariable int page, HttpServletRequest request) {
 		HttpSession session = request.getSession(true);
 		Integer uid = (Integer) session.getAttribute("uid");
-		User user =userService.findOne(uid);
-		
-		return goodsListService.findSellerGoodsList(user.getUser_name(),page);
+		User user = userService.findOne(uid);
+
+		return goodsListService.findSellerGoodsList(user.getUser_name(), page);
 
 	}
-	
-	@RequestMapping(value="/GoodsList/{id}",method=RequestMethod.GET)
-	public GoodsListWithItem GoodsListItem( 
-			@PathVariable int id,
-			HttpServletRequest request){
-		return getGoodsListItem(id,0, request);
+
+	@RequestMapping(value = "/GoodsList/{id}", method = RequestMethod.GET)
+	public GoodsListWithItem GoodsListItem(@PathVariable int id, HttpServletRequest request) {
+		return getGoodsListItem(id, 0, request);
 
 	}
-	
-	@RequestMapping(value="/GoodsList/{id}/{page}",method=RequestMethod.GET)
-	public GoodsListWithItem getGoodsListItem( 
-			@PathVariable int id,
-			@PathVariable int page,
-			HttpServletRequest request){
+
+	@RequestMapping(value = "/GoodsList/{id}/{page}", method = RequestMethod.GET)
+	public GoodsListWithItem getGoodsListItem(@PathVariable int id, @PathVariable int page,
+			HttpServletRequest request) {
 		GoodsListWithItem goodsListWithItem = new GoodsListWithItem();
 		GoodsList goodsList;
-		goodsList=goodsListService.findGoodsListById(id);
+		goodsList = goodsListService.findGoodsListById(id);
 		goodsListWithItem.setCreateTime(goodsList.getCreateTime());
 		goodsListWithItem.setGoods_list_image(goodsList.getGoods_list_image());
 		goodsListWithItem.setGoods_list_name(goodsList.getGoods_list_name());
@@ -126,13 +125,12 @@ public class GoodsListController {
 		goodsListWithItem.setSeller_id(goodsList.getSeller_id());
 		goodsListWithItem.setSeller_name(goodsList.getSeller_name());
 
-		
-		String s[]=goodsList.getGoods_list_item().split("-");
-		int[] ids=new int[s.length];
-		for(int i=0;i<s.length;i++){			
-			ids[i]=Integer.parseInt(s[i]);
+		String s[] = goodsList.getGoods_list_item().split("-");
+		int[] ids = new int[s.length];
+		for (int i = 0; i < s.length; i++) {
+			ids[i] = Integer.parseInt(s[i]);
 		}
-		List<Goods>goodsItem=goodsListService.findGoodsInList(ids,page);
+		List<Goods> goodsItem = goodsListService.findGoodsInList(ids, page);
 		goodsListWithItem.setGoods_list_item(goodsItem);
 		return goodsListWithItem;
 

@@ -56,6 +56,15 @@ public class APIController {
 		return user;
 	}
 	
+	
+	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+	public User getUser(
+			@PathVariable int id,
+			HttpServletRequest request) {
+		User user = userService.findOne(id);
+		return user;
+	}
+	
 	@RequestMapping(value = "/access_me", method = RequestMethod.GET)
 	public User getAccess_me(HttpServletRequest request) {
 		HttpSession session = request.getSession(true);

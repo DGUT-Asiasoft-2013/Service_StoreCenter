@@ -118,6 +118,26 @@ public class GoodsController {
 		return g;
 
 	}
+	
+	@RequestMapping(value="/goodsById/{id}",method=RequestMethod.GET)
+	public Page<Goods> getGoodsById( 
+			@PathVariable int id,
+			HttpServletRequest request){
+		return getGoodsById(0,id,request);
+	}
+
+	@RequestMapping(value="/goodsById/{id}/{page}",method=RequestMethod.GET)
+	public Page<Goods> getGoodsById(
+			@PathVariable int page,
+			@PathVariable int id,
+			HttpServletRequest request
+			){
+		
+		Page<Goods> g = goodsService.findAllGoods(id ,page);
+		return g;
+
+	}
+	
 
 
 	@RequestMapping(value="/search", method=RequestMethod.POST)
@@ -336,5 +356,7 @@ public class GoodsController {
 		User user = userService.findOne(uid);
 		return user;
 	}
+	
+	
 
 }
