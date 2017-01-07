@@ -38,7 +38,6 @@ import org.springframework.web.multipart.MultipartRequest;
 public class GoodsController {
 	@Autowired
 	IGoodsService goodsService;
-
 	@Autowired
 	IUserService userService;
 	@Autowired
@@ -182,12 +181,12 @@ public class GoodsController {
 			@PathVariable int id){
 		Goods goods = goodsService.findOne(id);
 		if(goods!=null){
-			goodsService.delete(goods);
+			goods.setStatus(2); //已下架
+			goodsService.save(goods);
 			return true;
 		}else{
 			return false;
 		}
-		
 	}
 	
 	@RequestMapping(value="/buy/{goods_id}/{id}", method=RequestMethod.POST)
@@ -287,6 +286,7 @@ public class GoodsController {
 		
 		if(likes){
 			likesService.addLike(user, goods);
+			downService.removeDown(user, goods);
 		}else{
 			likesService.removeLike(user, goods);
 		}
@@ -324,6 +324,7 @@ public class GoodsController {
 		
 		if(downs){
 			downService.addDown(user, goods);
+			likesService.removeLike(user, goods);
 		}else{
 			downService.removeDown(user, goods);
 		}
@@ -355,6 +356,21 @@ public class GoodsController {
 		Integer uid = (Integer) session.getAttribute("uid");
 		User user = userService.findOne(uid);
 		return user;
+	}
+	
+	
+	@RequestMapping(value="goods/{id}/getDownNum", method = RequestMethod.GET)
+	public int getDownNum(
+			@PathVariable  int id){
+		return downService.downsCount(id);
+		
+	}
+	
+	@RequestMapping(value="goods/{id}/getLikeNum", method = RequestMethod.GET)
+	public int getLikeNum(
+			@PathVariable  int id){
+		return likesService.likeCount(id);
+		
 	}
 	
 	
