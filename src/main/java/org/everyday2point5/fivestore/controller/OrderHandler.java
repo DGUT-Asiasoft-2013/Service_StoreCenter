@@ -48,7 +48,7 @@ public class OrderHandler {
 			@RequestParam Float price){
 			MyOrder order = orderService.findOneOrder(order_id);
 			order.setStatus(0);
-			moneyChange(price*amount,sale_id);
+			moneyChange(price,sale_id);
 			return orderService.save(order);
 		
 	}
