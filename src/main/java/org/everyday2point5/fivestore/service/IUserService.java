@@ -26,4 +26,6 @@ public interface IUserService {
 
 	User findUserByName(String name);
 
+	User findUserByAccount(String account);
+
 }

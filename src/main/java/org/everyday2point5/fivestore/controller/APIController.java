@@ -1,4 +1,3 @@
-
 package org.everyday2point5.fivestore.controller;
 
 import java.io.File;
@@ -220,9 +219,14 @@ public class APIController {
 	}
 
 	@RequestMapping(value = "/passwordRec", method = RequestMethod.POST)
-	public User recoveryPsw(@RequestParam String name) {
+	public User recoveryPsw(@RequestParam String account) {
 
-		return userService.findUserByName(name);
+		User user=userService.findUserByName(account);
+		if(user==null){
+			return null;
+		}else{
+			return userService.findUserByName(account);
+		}		
 	}
 
 	@RequestMapping(value = "/confirmRecord", method = RequestMethod.POST)
