@@ -28,4 +28,6 @@ public interface IUserService {
 	
 	User findUserByName1(String name);
 
+	User findUserByAccount(String account);
+
 }
