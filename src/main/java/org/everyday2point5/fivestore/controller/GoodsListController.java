@@ -135,4 +135,34 @@ public class GoodsListController {
 		return goodsListWithItem;
 
 	}
+	
+	@RequestMapping(value = "/changesGoodsList", method = RequestMethod.POST)
+	public GoodsList changesGoodsList(
+			@RequestParam int id,
+			@RequestParam String name,
+			@RequestParam String text, 
+			@RequestParam String item,
+			MultipartFile goods_list_image, 
+			HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Integer uid = (Integer) session.getAttribute("uid");
+		User user = userService.findOne(uid);
+		GoodsList goodsList=goodsListService.findGoodsListById(id);
+		goodsList.setGoods_list_name(name);
+		goodsList.setGoods_list_text(text);
+		goodsList.setGoods_list_item(item);
+		goodsList.setCreateTime(new Date());
+		if (goods_list_image != null) {
+			String realpath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload");
+			try {
+				FileUtils.copyInputStreamToFile(goods_list_image.getInputStream(),
+						new File(realpath, name + "-" + user.getId() + "-" + "goodslist.png"));
+				goodsList.setGoods_list_image("upload/" + name + "-" + user.getId() + "-" + "goodslist.png");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return goodsListService.save(goodsList);
+
+	}
 }
