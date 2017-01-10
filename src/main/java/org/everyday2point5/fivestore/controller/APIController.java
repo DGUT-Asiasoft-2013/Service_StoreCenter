@@ -1,3 +1,4 @@
+
 package org.everyday2point5.fivestore.controller;
 
 import java.io.File;
@@ -89,19 +90,12 @@ public class APIController {
 	
 	//授权登陆
 	@RequestMapping(value = "/access_login", method = RequestMethod.POST)
-	public @ResponseBody User access_login(
-			@RequestParam String user_name,
-			@RequestParam Integer user_id,
+	public @ResponseBody void access_login(
+			@RequestParam String account,
+			@RequestParam String passwordHash,
 			HttpServletRequest request) {
 		
-			User user = new User();
-			user.setUser_name(user_name);
-			user.setId(user_id);
-			
-			HttpSession session = request.getSession(true);
-			session.setAttribute("uid", user_id);
-			return userService.save(user);
-	
+		login(account, passwordHash,request);
 	}
 	
 	
@@ -140,6 +134,24 @@ public class APIController {
 			}
 
 		}
+		return userService.save(user);
+
+	}
+	
+	@RequestMapping(value = "/access_register", method = RequestMethod.POST)
+	public @ResponseBody User access_register(
+			@RequestParam String name,
+			@RequestParam String account,
+			@RequestParam String passwordHash,
+			HttpServletRequest request) {
+
+		User user = new User();
+
+		user.setUser_name(name);
+		user.setAccount(account);
+		user.setPassword(passwordHash);
+
+		
 		return userService.save(user);
 
 	}
@@ -219,14 +231,9 @@ public class APIController {
 	}
 
 	@RequestMapping(value = "/passwordRec", method = RequestMethod.POST)
-	public User recoveryPsw(@RequestParam String account) {
+	public User recoveryPsw(@RequestParam String name) {
 
-		User user=userService.findUserByName(account);
-		if(user==null){
-			return null;
-		}else{
-			return userService.findUserByName(account);
-		}		
+		return userService.findUserByName(name);
 	}
 
 	@RequestMapping(value = "/confirmRecord", method = RequestMethod.POST)
@@ -254,5 +261,12 @@ public class APIController {
 		Integer uid = (Integer) session.getAttribute("uid");
 
 		return recordService.findAllMyRecord(uid, page);
+	}
+	
+	///getUser
+	@RequestMapping(value = "/getUser/{account}", method = RequestMethod.GET)
+	public User getUserByAccount(@PathVariable String account) {
+
+		return userService.findUserByAccount(account);
 	}
 }
