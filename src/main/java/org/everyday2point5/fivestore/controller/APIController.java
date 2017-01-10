@@ -10,13 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.everyday2point5.fivestore.entity.User;
-import org.everyday2point5.fivestore.entity.Comment;
-import org.everyday2point5.fivestore.entity.Goods;
-import org.everyday2point5.fivestore.entity.MyOrder;
 import org.everyday2point5.fivestore.entity.Record;
-import org.everyday2point5.fivestore.entity.User;
-import org.everyday2point5.fivestore.service.ICommentService;
-import org.everyday2point5.fivestore.service.IGoodsService;
 import org.everyday2point5.fivestore.service.IRecordService;
 import org.everyday2point5.fivestore.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,16 +82,7 @@ public class APIController {
 		}
 	}
 	
-	//授权登陆
-	@RequestMapping(value = "/access_login", method = RequestMethod.POST)
-	public @ResponseBody void access_login(
-			@RequestParam String account,
-			@RequestParam String passwordHash,
-			HttpServletRequest request) {
-		
-		login(account, passwordHash,request);
-	}
-	
+
 	
 
 	@RequestMapping(value = "/passwordrecover", method = RequestMethod.POST)
@@ -143,6 +128,7 @@ public class APIController {
 			@RequestParam String name,
 			@RequestParam String account,
 			@RequestParam String passwordHash,
+			@RequestParam String avatar,
 			HttpServletRequest request) {
 
 		User user = new User();
@@ -150,7 +136,7 @@ public class APIController {
 		user.setUser_name(name);
 		user.setAccount(account);
 		user.setPassword(passwordHash);
-
+		user.setAvatar(avatar);
 		
 		return userService.save(user);
 

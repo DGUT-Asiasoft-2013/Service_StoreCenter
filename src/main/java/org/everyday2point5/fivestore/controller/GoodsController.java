@@ -210,7 +210,6 @@ public class GoodsController {
 		Integer user_id = user.getId();
 		if (goods != null){
 			order.setGoods(goods);
-			order.getGoods().setId(id);
 		}else{
 			System.out.println("goods is null!");
 		}
