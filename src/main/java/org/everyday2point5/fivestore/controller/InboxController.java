@@ -55,7 +55,7 @@ public class InboxController {
 		
 		User user =userService.findOne(uid);
 		if(user!=null){
-			inbox.setRec_user(getUser(user.getUser_name()));
+			inbox.setRec_user(user);
 		}else{
 			//服务器无登陆状态
 		}
@@ -75,6 +75,7 @@ public class InboxController {
 			inboxList.setRec_name(user.getUser_name());
 			inboxList.setSign(sign);
 			inboxList.setCreateDate(curDate);
+			System.out.println();
 			inboxService.save(inboxList);
 		} else {
 			inboxList.setLast_inbox(inbox);
@@ -147,7 +148,7 @@ public class InboxController {
 	public User getUser(
 			@RequestParam  String name
 			){
-		return userService.findByName(name);
+		return userService.findUserByName1(name);
 	}
 	
 }

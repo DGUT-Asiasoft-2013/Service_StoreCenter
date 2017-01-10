@@ -25,5 +25,7 @@ public interface IUserService {
 	User findByName(String name);
 
 	User findUserByName(String name);
+	
+	User findUserByName1(String name);
 
 }

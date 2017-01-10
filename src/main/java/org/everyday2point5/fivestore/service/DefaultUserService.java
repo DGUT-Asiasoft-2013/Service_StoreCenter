@@ -87,6 +87,12 @@ public class DefaultUserService implements IUserService {
 		return userRepo.save(user);
 	}
 
+	@Override
+	public User findUserByName1(String name) {
+		// TODO Auto-generated method stub
+		return userRepo.findByName1(name);
+	}
+
 
 
 
