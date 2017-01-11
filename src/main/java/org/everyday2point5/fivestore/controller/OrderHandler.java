@@ -53,10 +53,10 @@ public class OrderHandler {
 		
 	}
 	
-	public User moneyChange(float f,int uid) {
+	public User moneyChange(float price,int uid) {
 		
 		User user =userService.findOne(uid);
-		user.setMoney((user.getMoney()+f));
+		user.setMoney((user.getMoney()+price));
 		return userService.save(user);
 	}
 	
@@ -67,8 +67,15 @@ public class OrderHandler {
 			@RequestParam String order_id){
 			MyOrder order = orderService.findOneOrder(order_id);
 			order.setStatus(3);
-			return orderService.save(order);
+			moneyadd(order.getBuyer_id(),order.getPrice());
+			return orderService.save(order);	
+	}
+	
+	public User moneyadd(int uid,float price) {
 		
+		User user =userService.findOne(uid);
+		user.setMoney((user.getMoney()+price));
+		return userService.save(user);
 	}
 	
 	
