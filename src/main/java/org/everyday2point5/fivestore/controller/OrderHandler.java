@@ -35,7 +35,7 @@ public class OrderHandler {
 	public MyOrder sendGoods(
 			@RequestParam String order_id){
 			MyOrder order = orderService.findOneOrder(order_id);
-			order.setStatus(2);
+			order.setStatus(2);//发货
 			return orderService.save(order);
 		
 	}
